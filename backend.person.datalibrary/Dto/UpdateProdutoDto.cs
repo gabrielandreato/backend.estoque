@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace backend.person.datalibrary.Dto
 {
     public class UpdateProdutoDto
-    {
-        public int Id { get; set; }
+     { 
+         public int Id { get; set; }
         public string Descricao { get; set; }
     }
 }

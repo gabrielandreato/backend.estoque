@@ -8,6 +8,8 @@ public class PersonDataContext : DbContext, IPersonDataContext
 {
     public DbSet<Person> Person { get; set; } = null!;
     public DbSet<Produto> Produto { get; set; }
+    
+    public DbSet<Marca> Marca { get; set; }
     public PersonDataContext(DbContextOptions options) : base(options)
     {
 

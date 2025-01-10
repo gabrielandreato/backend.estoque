@@ -8,6 +8,8 @@ public interface IPersonDataContext
 {
     public DbSet<Person> Person { get; set; }
     public DbSet<Produto> Produto { get; set; }
+    
+    public DbSet<Marca> Marca { get; set; }
 
     IDbContextTransaction? CurrentTransaction();
     IDbContextTransaction? BeginTransaction();

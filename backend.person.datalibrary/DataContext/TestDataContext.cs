@@ -9,6 +9,8 @@ public class TestDataContext: DbContext, IPersonDataContext
 {
     public DbSet<Person> Person { get; set; } = null!;
     public DbSet<Produto> Produto { get; set; }
+    
+    public DbSet<Marca> Marca { get; set; }
 
     private readonly string? _v = null;
 

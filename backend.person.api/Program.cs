@@ -32,6 +32,7 @@ try
 
     builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
 
+    builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
     #endregion
 
     #region Services
@@ -39,7 +40,8 @@ try
     builder.Services.AddTransient<IPersonService, PersonService>();
 
     builder.Services.AddTransient<IProdutoService, ProdutoService>();
-
+    
+    builder.Services.AddTransient<IMarcaService, MarcaService>();
     #endregion
 
     builder.Services.AddControllers();
@@ -94,5 +96,5 @@ finally
 }
 namespace backend.person.api
 {
-    public partial class Program { }
+    public partial class Program { }    
 }
