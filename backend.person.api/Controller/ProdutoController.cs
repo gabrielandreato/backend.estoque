@@ -75,18 +75,24 @@ namespace backend.person.api.Controller
 
         [HttpGet]
         public IActionResult GetList([FromQuery] string? ids = null, string? descricao = null,
-         int page = 0, int pageSize = 0)
+         int page = 0, int pageSize = 0, int? idMarca = null )
         {
             try
             {
 
-                return Ok(_produtoService.GetList(ids,  descricao, page, pageSize));
+                return Ok(_produtoService.GetList(ids,  descricao, page, pageSize, idMarca ));
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
-
+        
+        
+       
+        
+        
+        
+        
     }
 }

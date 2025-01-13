@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
@@ -56,13 +57,14 @@ public class ProdutoRepository : IProdutoRepository
     }
 
     public PagedList<Produto> GetList(int[]? ids = null, string? descricao = null, 
-        int page = 0, int pageSize = 0)
+        int page = 0, int pageSize = 0, int? idMarca = null )
     {
         var query =
             from produto in _context.Produto
             where
                 (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
-                && (descricao == null || descricao == produto.Descricao)
+                && (descricao == null || descricao == produto.Descricao )
+                && (idMarca == null || idMarca == produto.IdMarca)
             select produto;
 
         return PagedList<Produto>.Create(query, page, pageSize);

@@ -14,7 +14,7 @@ namespace backend.person.api.Services.Interfaces
         
         Produto Update (int id, UpdateProdutoDto updateProdutoDto);
         PagedList<Produto> GetList(string? ids, string? descricao,
-        int page, int pageSize);
+        int page, int pageSize, int? idMarca);
 
     }
 }

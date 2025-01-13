@@ -19,6 +19,6 @@ public interface IProdutoRepository
 
     Produto Update(int id, UpdateProdutoDto updateProdutoDto);
 
-    PagedList<Produto> GetList(int[]? ids = null, string? desricao = null, 
-        int page = 0, int pageSize = 0);
+    PagedList<Produto> GetList(int[]? ids = null, string? descricao = null, 
+        int page = 0, int pageSize = 0, int? idMarca = null);
 }

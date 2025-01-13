@@ -43,10 +43,10 @@ namespace backend.person.api.Services
 
 
         public PagedList<Produto> GetList(string? ids, string? descricao,
-        int page, int pageSize)
+        int page, int pageSize, int? idMarca )
         {
             var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-            return _produtoRepository.GetList(splittedIds, descricao, page, pageSize);
+            return _produtoRepository.GetList(splittedIds, descricao, page, pageSize, idMarca );
         }
     }
 }
