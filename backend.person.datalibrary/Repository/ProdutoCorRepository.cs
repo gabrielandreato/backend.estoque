@@ -47,7 +47,7 @@ public class ProdutoCorRepository : IProdutoCorRepository
         return produtocor;
     }
 
-    public ProdutoCor Delete(int id)
+    public ProdutoCor Remove (int id)
     {
         var produtocor = GetByPk(id);
         _context.ProdutoCor.Remove(produtocor);

@@ -12,7 +12,7 @@ public interface IProdutoCorRepository
     
     ProdutoCor Update(int id, UpdateProdutoCorDto produtoCor);
 
-    ProdutoCor Delete(int id);
+    ProdutoCor Remove(int id);
     
     PagedList<ProdutoCor>GetList(int[]? ids = null,int? idProduto = null, int? idCor = null,
         int page = 0, int pageSize = 0);

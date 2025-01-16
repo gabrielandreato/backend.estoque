@@ -36,7 +36,7 @@ public class ProdutoCorService : IProdutoCorService
 
     public ProdutoCor Delete(int id)
     {
-        return _produtoCorRepository.Delete(id);
+        return _produtoCorRepository.Remove(id);
     }
     
     public PagedList<ProdutoCor> GetList (string? ids,int? idProduto, int? idCor, 
