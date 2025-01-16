@@ -1,10 +1,12 @@
-﻿using System.Linq.Expressions;
+﻿using System.Collections.Immutable;
+using System.Linq.Expressions;
 using AutoMapper;
 using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
 using backend.person.modellibrary.Utils;
+using backend.person.modellibrary.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.person.datalibrary.Repository;
@@ -68,7 +70,33 @@ public class ProdutoRepository : IProdutoRepository
 
         return PagedList<Produto>.Create(query, page, pageSize);
     }
+    public PagedList<VwProduto> GetVw(int[]? ids = null, string? descricao = null, 
+        int page = 0, int pageSize = 0, int? idMarca = null,int? idCategoria = null )
+    {
+        var query =
+            from produto in _context.Produto
+            join marca in _context.Marca on produto.IdMarca equals marca.Id
+            join produtoCategoria in _context.ProdutoCategoria on produto.IdCategoria equals produtoCategoria.Id
+            where
+                (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
+                && (descricao == null || descricao == produto.Descricao)
+                && (idMarca == null || idMarca == produto.IdMarca)
+                && (idCategoria == null || idCategoria == produto.IdCategoria)
+                
+            select new VwProduto()
+            {
+                Id = produto.Id,
+                Descricao = produto.Descricao,
+                IdMarca = produto.IdMarca,
+                DescricaoMarca = marca.Descricao,
+                IdCategoria = produto.IdCategoria,
+                DescricaoCategoria = produtoCategoria.Descricao,
+                ProdutoCores = _context.ProdutoCor.Where(produtoCor => produtoCor.IdProduto == produto.Id ).ToList(),
+                
+            };
 
+        return PagedList<VwProduto>.Create(query, page, pageSize);
+    }
 
 
 }

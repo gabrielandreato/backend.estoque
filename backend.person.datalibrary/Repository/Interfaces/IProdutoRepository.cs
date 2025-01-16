@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using backend.person.modellibrary.ViewModel;
 
 namespace backend.person.datalibrary.Repository.Interfaces;
 
@@ -21,4 +22,7 @@ public interface IProdutoRepository
 
     PagedList<Produto> GetList(int[]? ids = null, string? descricao = null, 
         int page = 0, int pageSize = 0, int? idMarca = null);
+    
+    PagedList<VwProduto> GetVw(int[]? ids = null, string? descricao = null, 
+        int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null);
 }

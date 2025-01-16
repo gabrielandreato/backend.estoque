@@ -89,8 +89,20 @@ namespace backend.person.api.Controller
         }
         
         
-       
-        
+        [HttpGet("VwProduto")]
+        public IActionResult GetVw([FromQuery] string? ids = null, string? descricao = null,
+            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null)
+        {
+            try
+            {
+
+                return Ok(_produtoService.GetVw(ids,  descricao, page, pageSize, idMarca, idCategoria));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         
         
         
