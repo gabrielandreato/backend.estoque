@@ -24,7 +24,6 @@ public class ProdutoCategoriaRepository : IProdutoCategoriaRepository
     public ProdutoCategoria Create(ProdutoCategoria produtocategoria)
     {
         _context.ProdutoCategoria.Add(produtocategoria);
-
         _context.SaveChanges();
         return produtocategoria;
     }
@@ -65,6 +64,7 @@ public class ProdutoCategoriaRepository : IProdutoCategoriaRepository
             where
                 (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
                 && (descricao == null || descricao == produto.Descricao )
+                
                 
             select produto;
 

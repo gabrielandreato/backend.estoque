@@ -12,5 +12,6 @@ namespace backend.person.modellibrary.DataModel
 
         public string Descricao { get; set; }
 
+        public int IdMarca { get; set; }
     }
 }

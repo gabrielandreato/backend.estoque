@@ -9,7 +9,7 @@ public interface IMarcaService
     Marca Create(CreateMarcaDto marcaDto);
     Marca GetByPk(int id);
 
-    Marca Remove(int Id);
+    Marca Remove(int id);
     
     Marca Update(int id, UpdateMarcaDto updateMarcaDto);
 

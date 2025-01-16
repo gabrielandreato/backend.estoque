@@ -11,7 +11,13 @@ public class TestDataContext: DbContext, IPersonDataContext
     public DbSet<Produto> Produto { get; set; }
     
     public DbSet<Marca> Marca { get; set; }
-
+    
+    public DbSet<ProdutoCategoria> ProdutoCategoria { get; set; }
+    
+    public DbSet<Cor> Cor { get; set; }
+    
+    public DbSet<ProdutoCor> ProdutoCor { get; set; }
+    
     private readonly string? _v = null;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

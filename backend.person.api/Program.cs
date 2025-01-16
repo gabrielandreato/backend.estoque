@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
-try
-{
-    Log.Information("Starting web application");
+// try
+// {
+//     Log.Information("Starting web application");
 
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
-        loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
+    // builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+    //     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
     var connectionString = builder.Configuration.GetConnectionString("PersonDataStringConnection");
 
@@ -33,6 +33,14 @@ try
     builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
 
     builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
+    
+    builder.Services.AddTransient<IProdutoCategoriaRepository, ProdutoCategoriaRepository>();
+    
+    builder.Services.AddTransient<ICorRepository, CorRepository>();
+    
+    builder.Services.AddTransient<IProdutoCorRepository, ProdutoCorRepository>();
+    
+     
     #endregion
 
     #region Services
@@ -42,6 +50,12 @@ try
     builder.Services.AddTransient<IProdutoService, ProdutoService>();
     
     builder.Services.AddTransient<IMarcaService, MarcaService>();
+    
+    builder.Services.AddTransient<IProdutoCategoriaService, ProdutoCategoriaService>();
+    
+    builder.Services.AddTransient<ICorService, CorService>();
+    
+    builder.Services.AddTransient<IProdutoCorService, ProdutoCorService>();
     #endregion
 
     builder.Services.AddControllers();
@@ -85,15 +99,15 @@ try
 
     app.Run();
 
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Application terminated unexpectedly");
-}
-finally
-{
-    Log.CloseAndFlush();
-}
+// }
+// catch (Exception ex)
+// {
+//     Log.Fatal(ex, "Application terminated unexpectedly");
+// }
+// finally
+// {
+//     Log.CloseAndFlush();
+// }
 namespace backend.person.api
 {
     public partial class Program { }    

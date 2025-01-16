@@ -11,6 +11,7 @@ namespace backend.person.datalibrary.Profiles
             CreateMap<CreateProdutoDto, Produto>();
 
             CreateMap<UpdateProdutoDto, Produto>();
+            
         }
     }
 }

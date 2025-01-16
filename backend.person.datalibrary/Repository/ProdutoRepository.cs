@@ -24,7 +24,6 @@ public class ProdutoRepository : IProdutoRepository
     public Produto Create(Produto produto)
     {
         _context.Produto.Add(produto);
-
         _context.SaveChanges();
         return produto;
     }

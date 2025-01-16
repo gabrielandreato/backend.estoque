@@ -10,7 +10,13 @@ public interface IPersonDataContext
     public DbSet<Produto> Produto { get; set; }
     
     public DbSet<Marca> Marca { get; set; }
-
+    
+    public DbSet<ProdutoCategoria> ProdutoCategoria { get; set; }
+    
+    public DbSet<Cor> Cor { get; set; }
+    
+   public DbSet<ProdutoCor> ProdutoCor { get; set; }
+    
     IDbContextTransaction? CurrentTransaction();
     IDbContextTransaction? BeginTransaction();
     bool IsInMemory();

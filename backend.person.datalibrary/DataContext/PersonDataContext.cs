@@ -10,6 +10,12 @@ public class PersonDataContext : DbContext, IPersonDataContext
     public DbSet<Produto> Produto { get; set; }
     
     public DbSet<Marca> Marca { get; set; }
+    
+    public DbSet<ProdutoCategoria> ProdutoCategoria { get; set; }
+    
+    public DbSet<Cor> Cor { get; set; }
+    
+    public DbSet<ProdutoCor> ProdutoCor { get; set; }
     public PersonDataContext(DbContextOptions options) : base(options)
     {
 
