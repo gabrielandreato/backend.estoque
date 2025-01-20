@@ -16,6 +16,9 @@ public interface IPersonDataContext
     public DbSet<Cor> Cor { get; set; }
     
    public DbSet<ProdutoCor> ProdutoCor { get; set; }
+   public DbSet<EstoqueEvento> EstoqueEvento { get; set; }
+   public DbSet<EstoqueMovimento> EstoqueMovimento { get; set; }
+   
     
     IDbContextTransaction? CurrentTransaction();
     IDbContextTransaction? BeginTransaction();

@@ -18,6 +18,10 @@ public class TestDataContext: DbContext, IPersonDataContext
     
     public DbSet<ProdutoCor> ProdutoCor { get; set; }
     
+    public DbSet<EstoqueEvento> EstoqueEvento { get; set; }
+    
+    public DbSet<EstoqueMovimento> EstoqueMovimento { get; set; }
+    
     private readonly string? _v = null;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

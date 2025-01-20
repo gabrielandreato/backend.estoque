@@ -16,6 +16,12 @@ public class PersonDataContext : DbContext, IPersonDataContext
     public DbSet<Cor> Cor { get; set; }
     
     public DbSet<ProdutoCor> ProdutoCor { get; set; }
+    
+    public DbSet<EstoqueEvento> EstoqueEvento { get; set; }
+    
+    public DbSet<EstoqueMovimento> EstoqueMovimento { get; set; }
+    
+   
     public PersonDataContext(DbContextOptions options) : base(options)
     {
 

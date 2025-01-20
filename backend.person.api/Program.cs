@@ -39,6 +39,10 @@ using Serilog;
     builder.Services.AddTransient<ICorRepository, CorRepository>();
     
     builder.Services.AddTransient<IProdutoCorRepository, ProdutoCorRepository>();
+
+    builder.Services.AddTransient<IEstoqueEventoRepository, EstoqueEventoRepository>();
+    
+    builder.Services.AddTransient<IEstoqueMovimentoRepository, EstoqueMovimentoRepository>();
     
      
     #endregion
@@ -56,6 +60,10 @@ using Serilog;
     builder.Services.AddTransient<ICorService, CorService>();
     
     builder.Services.AddTransient<IProdutoCorService, ProdutoCorService>();
+    
+    builder.Services.AddTransient<IEstoqueEventoService, EstoqueEventoService>();
+
+    builder.Services.AddTransient<IEstoqueMovimentoService, EstoqueMovimentoService>();
     #endregion
 
     builder.Services.AddControllers();
