@@ -22,6 +22,8 @@ public class TestDataContext: DbContext, IPersonDataContext
     
     public DbSet<EstoqueMovimento> EstoqueMovimento { get; set; }
     
+    public DbSet<OrdemCompraStatus> OrdemCompraStatus { get; set; }
+    
     private readonly string? _v = null;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

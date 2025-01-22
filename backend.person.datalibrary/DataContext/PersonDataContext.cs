@@ -21,6 +21,8 @@ public class PersonDataContext : DbContext, IPersonDataContext
     
     public DbSet<EstoqueMovimento> EstoqueMovimento { get; set; }
     
+    public DbSet<OrdemCompraStatus> OrdemCompraStatus { get; set; }
+    
    
     public PersonDataContext(DbContextOptions options) : base(options)
     {

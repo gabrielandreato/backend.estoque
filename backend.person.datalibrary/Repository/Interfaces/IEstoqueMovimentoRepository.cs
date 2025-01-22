@@ -5,6 +5,10 @@ namespace backend.person.datalibrary.Repository.Interfaces;
 
 public interface IEstoqueMovimentoRepository
 {
-    PagedList<EstoqueMovimento> GetList (int[]? ids, int? IdProduto, int? IdEstoqueMovimento,
+    PagedList<EstoqueMovimento> GetList (int[]? ids, int? IdProduto, int? IdEstoqueEvento,
         int page = 0, int pageSize = 0);
+    
+     EstoqueMovimento Create (EstoqueMovimento estoqueMovimento);
+     
+     
 }

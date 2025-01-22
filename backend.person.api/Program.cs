@@ -4,6 +4,7 @@ using backend.person.api.Services.Interfaces;
 using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Repository;
 using backend.person.datalibrary.Repository.Interfaces;
+using backend.person.modellibrary.DataModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -43,6 +44,8 @@ using Serilog;
     builder.Services.AddTransient<IEstoqueEventoRepository, EstoqueEventoRepository>();
     
     builder.Services.AddTransient<IEstoqueMovimentoRepository, EstoqueMovimentoRepository>();
+
+    builder.Services.AddTransient<IOrdemCompraStatusRepository, OrdemCompraStatusRepository>();
     
      
     #endregion
@@ -64,6 +67,8 @@ using Serilog;
     builder.Services.AddTransient<IEstoqueEventoService, EstoqueEventoService>();
 
     builder.Services.AddTransient<IEstoqueMovimentoService, EstoqueMovimentoService>();
+    
+    builder.Services.AddTransient<IOrdemCompraStatusService, OrdemCompraStatusService>();
     #endregion
 
     builder.Services.AddControllers();
