@@ -47,6 +47,16 @@ using Serilog;
 
     builder.Services.AddTransient<IOrdemCompraStatusRepository, OrdemCompraStatusRepository>();
     
+    builder .Services.AddTransient<IOrdemCompraRepository, OrdemCompraRepository>();
+    
+    builder.Services.AddTransient<IOrdemCompraLogRepository, OrdemCompraLogRepository>();
+    
+    builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+    
+    builder.Services.AddTransient<IPedidoStatusRepository, PedidoStatusRepository>();
+
+    builder.Services.AddTransient<IPedidoItensRepository, PedidoItensRepository>();
+    
      
     #endregion
 
@@ -69,6 +79,17 @@ using Serilog;
     builder.Services.AddTransient<IEstoqueMovimentoService, EstoqueMovimentoService>();
     
     builder.Services.AddTransient<IOrdemCompraStatusService, OrdemCompraStatusService>();
+    
+    builder.Services.AddTransient<IOrdemCompraService, OrdemCompraService>();
+    
+    builder.Services.AddTransient<IOrdemCompraLogSerivce, OrdemCompraLogService>();
+    
+    builder.Services.AddTransient<IPedidoService, PedidoService>();
+    
+    builder.Services.AddTransient<IPedidoStatusService, PedidoStatusService>();
+    
+    builder.Services.AddTransient<IPedidoItensService, PedidoItensService>();
+   
     #endregion
 
     builder.Services.AddControllers();

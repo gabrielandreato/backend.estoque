@@ -21,6 +21,16 @@ public interface IPersonDataContext
    
    public DbSet<OrdemCompraStatus> OrdemCompraStatus { get; set; }
    
+   public DbSet<OrdemCompra> OrdemCompra { get; set; }
+   public DbSet<OrdemCompraLog> OrdemCompraLog { get; set; }
+   
+   public DbSet<Pedido> Pedido { get; set; }
+   
+   public DbSet<PedidoStatus> PedidoStatus { get; set; }
+   
+   public DbSet<PedidoItens> PedidoItens { get; set; }
+   
+   
     
     IDbContextTransaction? CurrentTransaction();
     IDbContextTransaction? BeginTransaction();

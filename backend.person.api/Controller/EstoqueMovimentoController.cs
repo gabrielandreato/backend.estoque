@@ -20,13 +20,13 @@ public class EstoqueMovimentoController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids, int IdProduto, int IdEstoqueEvento,
+    public IActionResult GetList([FromQuery] string? ids, int idProduto, int idEstoqueEvento,
         int page = 0, int pageSize = 0)
     {
         try
         {
 
-            return Ok(_estoqueMovimentoService.GetList(ids, IdProduto, IdEstoqueEvento, page, pageSize));
+            return Ok(_estoqueMovimentoService.GetList(ids, idProduto, idEstoqueEvento, page, pageSize));
         }
         catch (Exception e)
         {

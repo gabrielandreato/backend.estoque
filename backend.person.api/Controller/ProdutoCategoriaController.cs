@@ -32,12 +32,12 @@ public class ProdutoCategoriaController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetByPK([FromRoute] int id)
+    public IActionResult GetByPk([FromRoute] int id)
     {
         try
         {
-            var byPK = _produtocategoriaService.GetByPk(id);
-            return Ok(byPK);
+            var byPk = _produtocategoriaService.GetByPk(id);
+            return Ok(byPk);
         }
         catch (Exception e)
         {
@@ -86,13 +86,11 @@ public class ProdutoCategoriaController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-
-
-
-
-
-
     }
+    
+    
+    
+    
 }
     
     
