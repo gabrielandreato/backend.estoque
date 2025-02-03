@@ -11,4 +11,10 @@ public interface IPedidoService
     Pedido Update(int id ,UpdatePedidoDto pedidoDto);
     Pedido Remove(int id);
     PagedList<Pedido> GetList(string? ids, string observacao, int idPedidoStatus, int page, int pageSize);
+
+    Pedido PedidoComItens (CreatePedidoComItensDto pedidoItens);
+    
+    Pedido Faturar (int id);
+    
+    Pedido Cancelado(int id);
 }

@@ -33,6 +33,8 @@ public class TestDataContext: DbContext, IPersonDataContext
     
     public DbSet<PedidoItens> PedidoItens { get; set; }
     
+    public DbSet<PedidoLog> PedidoLog { get; set; }
+    
     private readonly string? _v = null;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

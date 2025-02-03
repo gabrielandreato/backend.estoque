@@ -30,7 +30,7 @@ public class PedidoItensController : ControllerBase
         }
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public IActionResult GetByPk(int id)
     {
         try
@@ -70,6 +70,9 @@ public class PedidoItensController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+     
+    
+    
     
     
 }

@@ -1,6 +1,4 @@
-using AutoMapper;
 using backend.person.api.Services.Interfaces;
-using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
 using backend.person.modellibrary.Utils;
@@ -9,18 +7,15 @@ namespace backend.person.api.Services;
 
 public class PedidoStatusService : IPedidoStatusService
 {
-   private readonly IPedidoStatusRepository _pedidoStatusRepository; 
-   private readonly IMapper _mapper;
+   private readonly IPedidoStatusRepository _pedidoStatusRepository;
 
-   public PedidoStatusService(IPedidoStatusRepository pedidoStatusRepository, IMapper mapper)
+   public PedidoStatusService(IPedidoStatusRepository pedidoStatusRepository)
    {
       _pedidoStatusRepository = pedidoStatusRepository;
-      _mapper = mapper;
    }
 
-   public PedidoStatus Create(CreatePedidoStatusDto pedidoStatusDto)
+   public PedidoStatus Create(PedidoStatus pedidoStatus)
    {
-      var pedidoStatus = _mapper.Map<PedidoStatus>(pedidoStatusDto);
       return _pedidoStatusRepository.Create(pedidoStatus);
    }
 
@@ -29,7 +24,7 @@ public class PedidoStatusService : IPedidoStatusService
       return _pedidoStatusRepository.GetByPk(id);
    }
 
-   public PedidoStatus Update(int id, UpdatePedidoStatusDto pedidoStatusDto)
+   public PedidoStatus Update(int id, PedidoStatus pedidoStatusDto)
    {
       return _pedidoStatusRepository.Update(id, pedidoStatusDto);
    }
@@ -45,6 +40,7 @@ public class PedidoStatusService : IPedidoStatusService
       var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
       return _pedidoStatusRepository.GetList(splittedIds,observacao, page, pageSize);
    }
+   
    
    
 }

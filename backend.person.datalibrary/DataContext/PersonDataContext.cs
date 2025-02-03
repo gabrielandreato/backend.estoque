@@ -30,6 +30,8 @@ public class PersonDataContext : DbContext, IPersonDataContext
     public DbSet<PedidoStatus> PedidoStatus { get; set; }
     
     public DbSet<PedidoItens> PedidoItens { get; set; }
+    
+    public DbSet<PedidoLog> PedidoLog { get; set; }
    
     public PersonDataContext(DbContextOptions options) : base(options)
     {

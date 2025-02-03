@@ -83,7 +83,43 @@ public class PedidoController : ControllerBase
         
     }
     
-    
-    
-    
+    [HttpPost("PedidoComItens")]
+    public IActionResult PedidoComItens([FromBody] CreatePedidoComItensDto pedidoItens)
+    {
+        try
+        {
+            return Ok(_pedidoService.PedidoComItens(pedidoItens));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPut("Faturado/({id})")]
+    public IActionResult Faturado ([FromRoute]int id)
+    {
+        try
+        {
+            return Ok(_pedidoService.Faturar(id));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPut("Cancelado/({id})")]
+    public IActionResult Cancelado([FromRoute]int id)
+    {
+        
+        try
+        {
+            return Ok(_pedidoService.Cancelado(id));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

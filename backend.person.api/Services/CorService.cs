@@ -40,7 +40,7 @@ public class CorService : ICorService
         return _corRepository.Update(id, corDto);
     }
 
-    public PagedList<Cor> GetList(string ids, string? descricao, int page, int pageSize)
+    public PagedList<Cor> GetList(string? ids, string? descricao, int page, int pageSize)
     {
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
         return _corRepository.GetList(splittedIds, descricao, page, pageSize);

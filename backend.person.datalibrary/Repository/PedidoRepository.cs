@@ -69,4 +69,7 @@ public class PedidoRepository : IPedidoRepository
 
         return PagedList<Pedido>.Create(query, page, pageSize);
     }
+
+
+    
 }

@@ -11,5 +11,6 @@ public interface IPedidoRepository
     Pedido Update(int id, UpdatePedidoDto pedidoDto);
     Pedido Remove(int id);
     PagedList<Pedido> GetList(int[] splittedIds, string observacao, int? idPedidoStatus, int page, int pageSize);
-        
+
+    
 }

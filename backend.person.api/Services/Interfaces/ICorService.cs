@@ -14,6 +14,6 @@ public interface ICorService
     
     Cor Update (int id, UpdateCorDto cor);
     
-    PagedList<Cor>GetList(string ids, string? descricao,int page,int pageSize);
+    PagedList<Cor>GetList(string? ids, string? descricao,int page,int pageSize);
     
 }

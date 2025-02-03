@@ -1,28 +1,28 @@
 using backend.person.api.Services.Interfaces;
-using backend.person.datalibrary.Dto;
 using backend.person.modellibrary.DataModel;
+using backend.person.modellibrary.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.person.api.Controller;
-
 [ApiController]
-[Route("api/[controller]")]
-public class PedidoStatusController : ControllerBase
-{
-    private readonly IPedidoStatusService _pedidoStatusService;
+[Route("[controller]")]
 
-    public PedidoStatusController(IPedidoStatusService pedidoStatusService)
+public class PedidoLogController : ControllerBase
+{
+    private readonly IPedidoLogService _pedidoLogService;
+
+    public PedidoLogController(IPedidoLogService pedidoLogService)
     {
-        _pedidoStatusService = pedidoStatusService;
+        _pedidoLogService = pedidoLogService;
     }
 
 
     [HttpPost]
-    public IActionResult Create([FromBody] PedidoStatus pedidoStatus)
+    public IActionResult Create([FromBody] PedidoLog pedidoLog)
     {
         try
         {
-            return Ok(_pedidoStatusService.Create(pedidoStatus));
+            return Ok(_pedidoLogService.Create(pedidoLog));
         }
         catch (Exception e)
         {
@@ -35,8 +35,7 @@ public class PedidoStatusController : ControllerBase
     {
         try
         {
-            var byPk = _pedidoStatusService.GetByPk(id);
-            return Ok(byPk);
+            return Ok(_pedidoLogService.GetByPk(id));
         }
         catch (Exception e)
         {
@@ -46,11 +45,11 @@ public class PedidoStatusController : ControllerBase
 
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] PedidoStatus pedidoStatus)
+    public IActionResult Update([FromRoute]int id ,[FromBody] PedidoLog pedidoLog)
     {
         try
         {
-            return Ok(_pedidoStatusService.Update(id, pedidoStatus));
+            return Ok(_pedidoLogService.Update(id,pedidoLog));
         }
         catch (Exception e)
         {
@@ -63,7 +62,7 @@ public class PedidoStatusController : ControllerBase
     {
         try
         {
-            return Ok(_pedidoStatusService.Remove(id));
+            return Ok(_pedidoLogService.Remove(id));
         }
         catch (Exception e)
         {
@@ -71,22 +70,18 @@ public class PedidoStatusController : ControllerBase
         }
     }
 
+
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids,
-        string observacao, int page = 0, int pageSize = 0)
+    public IActionResult GetList
+        ([FromQuery] string? ids, int idPedido, int idStatus, int page = 0, int pageSize=0)
     {
         try
         {
-            return Ok(_pedidoStatusService.GetList(ids, observacao, page, pageSize));
+            return Ok(_pedidoLogService.GetList(ids, idPedido, idStatus, page, pageSize));
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
     }
-     
-    
-    
-    
-    
 }

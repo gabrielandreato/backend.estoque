@@ -1,4 +1,3 @@
-using AutoMapper;
 using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
@@ -10,12 +9,10 @@ namespace backend.person.datalibrary.Repository;
 public class PedidoStatusRepository : IPedidoStatusRepository
 {
     private readonly IPersonDataContext _context;
-    private readonly IMapper _mapper;
 
-    public PedidoStatusRepository(IPersonDataContext context, IMapper mapper)
+    public PedidoStatusRepository(IPersonDataContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public PedidoStatus Create(PedidoStatus pedidoStatus)
@@ -38,10 +35,12 @@ public class PedidoStatusRepository : IPedidoStatusRepository
         }
     }
 
-    public PedidoStatus Update(int id, UpdatePedidoStatusDto pedidoStatusDto)
+    public PedidoStatus Update(int id, PedidoStatus pedidoStatus)
     {
-        var pedidoStatus = GetByPk(id);
-        _mapper.Map(pedidoStatusDto, pedidoStatus);
+        var pedidoByPk = GetByPk(id);
+        
+        pedidoByPk.Descricao = pedidoStatus.Descricao;
+        
         _context.SaveChanges();
         return pedidoStatus;
     }
@@ -53,25 +52,17 @@ public class PedidoStatusRepository : IPedidoStatusRepository
         _context.SaveChanges();
         return pedidoStatus;
     }
-    
-    public PagedList<PedidoStatus> GetList (int[]? ids ,string? descricao,
+
+    public PagedList<PedidoStatus> GetList(int[]? ids, string? descricao,
         int page = 0, int pageSize = 0)
     {
         var query =
             from pedidostatus in _context.PedidoStatus
             where
-                
                 (ids == null || ids.Length == 0 || ids.Contains(pedidostatus.Id))
-                && (descricao == null || descricao == pedidostatus.Descricao )
-              
-             
-           
-                
-                
+                && (descricao == null || descricao == pedidostatus.Descricao)
             select pedidostatus;
 
         return PagedList<PedidoStatus>.Create(query, page, pageSize);
     }
-
-    
 }

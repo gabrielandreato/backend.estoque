@@ -9,7 +9,7 @@ public interface IPedidoStatusRepository
     PedidoStatus Create(PedidoStatus pedidoStatus);
     
     PedidoStatus GetByPk(int id);
-    PedidoStatus Update(int id, UpdatePedidoStatusDto pedidoStatusDto);
+    PedidoStatus Update(int id, PedidoStatus pedidoStatus);
     PedidoStatus Remove(int id);
 
     PagedList<PedidoStatus> GetList(int[] splittedIds, string descricao, int page, int pageSize);

@@ -7,9 +7,9 @@ namespace backend.person.api.Services.Interfaces;
 
 public interface IPedidoStatusService
 {
-    PedidoStatus Create(CreatePedidoStatusDto pedidoStatus);
+    PedidoStatus Create(PedidoStatus pedidoStatus);
     PedidoStatus GetByPk(int id);
-    PedidoStatus Update(int id, UpdatePedidoStatusDto pedidoStatus);
+    PedidoStatus Update(int id, PedidoStatus pedidoStatus);
     PedidoStatus Remove(int id);
     PagedList<PedidoStatus> GetList(string? ids,  string observacao, int page, int pageSize);
 }

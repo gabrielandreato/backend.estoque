@@ -30,6 +30,9 @@ public interface IPersonDataContext
    
    public DbSet<PedidoItens> PedidoItens { get; set; }
    
+   public DbSet<PedidoLog> PedidoLog { get; set; }
+   
+   
    
     
     IDbContextTransaction? CurrentTransaction();

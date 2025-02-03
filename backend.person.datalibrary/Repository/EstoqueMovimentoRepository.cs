@@ -11,10 +11,10 @@ public class EstoqueMovimentoRepository : IEstoqueMovimentoRepository
     private readonly IPersonDataContext _context;
     private readonly IMapper _mapper;
    
-    public EstoqueMovimentoRepository (IPersonDataContext context, IMapper mapper)
+    public EstoqueMovimentoRepository (IPersonDataContext context)
     {
         _context = context;
-        _mapper = _mapper;
+        
 
     }
     

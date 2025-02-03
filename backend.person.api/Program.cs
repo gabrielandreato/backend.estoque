@@ -56,6 +56,8 @@ using Serilog;
     builder.Services.AddTransient<IPedidoStatusRepository, PedidoStatusRepository>();
 
     builder.Services.AddTransient<IPedidoItensRepository, PedidoItensRepository>();
+
+    builder.Services.AddTransient<IPedidoLogRepository, PedidoLogRepository>();
     
      
     #endregion
@@ -89,6 +91,8 @@ using Serilog;
     builder.Services.AddTransient<IPedidoStatusService, PedidoStatusService>();
     
     builder.Services.AddTransient<IPedidoItensService, PedidoItensService>();
+    
+    builder.Services.AddTransient<IPedidoLogService, PedidoLogService>();
    
     #endregion
 
