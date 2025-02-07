@@ -1,8 +1,11 @@
+using System.Text.Json;
 using AutoMapper;
 using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.modellibrary.DataModel;
 using backend.person.modellibrary.Utils;
+using backend.person.modellibrary.ViewModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.person.datalibrary.Repository;
 
@@ -66,6 +69,48 @@ public class EstoqueEventoRepository: IEstoqueEventoRepository
         
         return PagedList<EstoqueEvento>.Create(query, page, pageSize);
     }
-    
+
+    public PagedList<VwRelatorioEstoque> GetVwRelatorioEstoque(int[]? idsProduto)
+    {
+        var queryProduto =
+            from produto in _context.Produto
+            where
+                (idsProduto == null || idsProduto.Length == 0 || idsProduto.Contains(produto.Id))
+            
+            select new VwRelatorioEstoque
+            {
+                IdProduto = produto.Id,
+                DescricaoProduto = produto.Descricao,
+                SaldoQuantidade = 0,
+                SaldoValor = 0
+            };
+       
+        
+         var queryEstoqueMovimento =
+             from estoqueMovimento in _context.EstoqueMovimento
+             where
+                 (idsProduto == null || idsProduto.Length == 0 || idsProduto.Contains(estoqueMovimento.IdProduto))
+             select estoqueMovimento;
+         
+       
+         var listaProdutos = queryProduto.ToList();
+         var listaEstoqueMovimentos = queryEstoqueMovimento.ToList();
+
+         foreach (var produto in listaProdutos)
+         {
+             produto.SaldoQuantidade = 
+                 listaEstoqueMovimentos
+                 .Where(x => x.IdProduto == produto.IdProduto)
+                 .Sum(x => x.Quantidade);
+             
+             produto.SaldoValor = 
+                 listaEstoqueMovimentos
+                     .Where(x => x.IdProduto == produto.IdProduto)
+                     .Sum(x => x.Valor);
+         }
+
+         return PagedList<VwRelatorioEstoque>.Create(queryProduto);
+
+    }
     
 }

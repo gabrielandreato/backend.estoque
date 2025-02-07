@@ -6,6 +6,7 @@ using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
 using backend.person.modellibrary.Enum;
 using backend.person.modellibrary.Utils;
+using backend.person.modellibrary.ViewModel;
 
 namespace backend.person.api.Services;
 
@@ -45,7 +46,8 @@ public class EstoqueMovimentoService : IEstoqueMovimentoService
         saida.DtInserido = DateTime.Now;
         return _estoqueMovimentoRepository.Create(saida);
     }
-    
+
+   
     
     
 }

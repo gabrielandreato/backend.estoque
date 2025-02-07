@@ -1,6 +1,7 @@
 using backend.person.datalibrary.Dto;
 using backend.person.modellibrary.DataModel;
 using backend.person.modellibrary.Utils;
+using backend.person.modellibrary.ViewModel;
 
 namespace backend.person.datalibrary.Repository;
 
@@ -13,4 +14,5 @@ public interface IEstoqueEventoRepository
     EstoqueEvento Delete(int id);
 
     PagedList<EstoqueEvento> GetList(int[]? splittedIds, string? descricao, int page = 0, int pageSize =0 );
+    PagedList<VwRelatorioEstoque> GetVwRelatorioEstoque(int[] idsProduto);
 }

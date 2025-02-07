@@ -6,6 +6,7 @@ using backend.person.datalibrary.Repository;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
 using backend.person.modellibrary.Utils;
+using backend.person.modellibrary.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.person.api.Services;
@@ -47,5 +48,11 @@ public class EstoqueEventoService : IEstoqueEventoService
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
         return _estoqueEventoRepository.GetList(splittedIds,descricao , page, pageSize);
     }
+
+    public PagedList<VwRelatorioEstoque> GetVwRelatorioEstoque(string? idsProduto)
+    {
+        var splittedIds = Array.ConvertAll(idsProduto?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        return _estoqueEventoRepository.GetVwRelatorioEstoque(splittedIds);
+    } 
     
 }

@@ -32,7 +32,7 @@ public class EstoqueMovimentoController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-        
+
     }
 
     [HttpPost("Entrada")]
@@ -60,5 +60,7 @@ public class EstoqueMovimentoController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    
     
 }

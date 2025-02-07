@@ -85,4 +85,19 @@ public class EstoqueEventoController : ControllerBase
     }
 
 
+    [HttpGet("VwRelatorioEstoque")]
+    public IActionResult GetVwRelatorioEstoque([FromQuery]string? idsProdutos)
+    {
+        try
+        {
+            return Ok(_estoqueEventoService.GetVwRelatorioEstoque(idsProdutos));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    
+    
 }
