@@ -10,12 +10,12 @@ namespace backend.person.datalibrary.Repository;
 public class PedidoRepository : IPedidoRepository
 {
     private readonly PersonDataContext _context;
-    private readonly IMapper _mapper;
+  
 
-    public PedidoRepository(PersonDataContext context, IMapper mapper)
+    public PedidoRepository(PersonDataContext context)
     {
         _context = context;
-        _mapper = mapper;
+       
     }
 
     public Pedido Create(Pedido pedido)
@@ -38,12 +38,13 @@ public class PedidoRepository : IPedidoRepository
         }
     }
 
-    public Pedido Update(int id, UpdatePedidoDto pedidoDto)
+    public Pedido Update (int id, Pedido pedido)
     {
-        var pedido = GetByPk(id);
-        _mapper.Map(pedidoDto, pedido);
+        var pedidoDoBanco = GetByPk(id);
+        pedidoDoBanco.IdPedidoStatus = pedido.IdPedidoStatus;
+        pedidoDoBanco.Observacao = pedido.Observacao;
         _context.SaveChanges();
-        return pedido;
+        return pedidoDoBanco;
     }
 
     public Pedido Remove(int id)

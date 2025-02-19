@@ -19,7 +19,7 @@ public class EstoqueEventoController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateEstoqueEventoDto estoqueevento)
+    public IActionResult Create([FromBody] EstoqueEvento estoqueevento)
     {
         try
         {
@@ -72,7 +72,7 @@ public class EstoqueEventoController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids, string descricao, int page = 0, int pageSize = 0)
+    public IActionResult GetList([FromQuery] int[]? ids, string descricao, int page = 0, int pageSize = 0)
     {
         try
         {
@@ -86,7 +86,7 @@ public class EstoqueEventoController : ControllerBase
 
 
     [HttpGet("VwRelatorioEstoque")]
-    public IActionResult GetVwRelatorioEstoque([FromQuery]string? idsProdutos)
+    public IActionResult GetVwRelatorioEstoque([FromQuery]int[]? idsProdutos)
     {
         try
         {

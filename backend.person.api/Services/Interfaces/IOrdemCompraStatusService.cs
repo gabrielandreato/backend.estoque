@@ -6,8 +6,8 @@ namespace backend.person.api.Services.Interfaces;
 
 public interface IOrdemCompraStatusService
 {
-    OrdemCompraStatus Create(CreateOrdemCompraStatusDto ordemCompraStatus);
-    OrdemCompraStatus Update(int id, UpdateOrdemCompraStatusDto ordemCompraStatusDto);
+    OrdemCompraStatus Create(OrdemCompraStatus ordemCompraStatus);
+    OrdemCompraStatus Update(int id, OrdemCompraStatus ordemCompraStatus);
     OrdemCompraStatus Remove(int id);
     OrdemCompraStatus GetByPk(int id);
     PagedList<OrdemCompraStatus> GetList (string? ids, string? descricao,

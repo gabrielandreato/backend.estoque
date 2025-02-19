@@ -11,7 +11,6 @@ namespace backend.person.api.Controller;
 public class OrdemCompraLogController : ControllerBase
 {
     private readonly IOrdemCompraLogSerivce _ordemCompraLogService;
-
     public OrdemCompraLogController(IOrdemCompraLogSerivce ordemCompraService)
     {
         _ordemCompraLogService = ordemCompraService;
@@ -19,7 +18,7 @@ public class OrdemCompraLogController : ControllerBase
 
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateOrdemCompraLogDto ordemCompraLog)
+    public IActionResult Create([FromBody] OrdemCompraLog ordemCompraLog)
     {
         try
         {
@@ -37,8 +36,8 @@ public class OrdemCompraLogController : ControllerBase
     {
         try
         {
-            var byPK = _ordemCompraLogService.GetByPk(id);
-            return Ok(byPK);
+            var ByPk  = _ordemCompraLogService.GetByPk(id);
+            return Ok(ByPk );
         }
         catch (Exception e)
         {
@@ -47,11 +46,11 @@ public class OrdemCompraLogController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id ,[FromBody] UpdateOrdemCompraLogDto ordemCompraLogDto)
+    public IActionResult Update([FromRoute] int id ,[FromBody] OrdemCompraLog ordemCompraLog)
     {
         try
         {
-            return Ok(_ordemCompraLogService.Update(id,ordemCompraLogDto));
+            return Ok(_ordemCompraLogService.Update(id,ordemCompraLog));
         }
         catch (Exception e)
         {
@@ -74,7 +73,7 @@ public class OrdemCompraLogController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids, int idOrdemDeCompra,
+    public IActionResult GetList([FromQuery]int[]? ids, int idOrdemDeCompra,
         int idOrdemCompraStatus, int page = 0, int pageSize = 0)
     {
         try

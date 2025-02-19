@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository;
 using backend.person.datalibrary.Repository.Interfaces;
@@ -10,44 +11,48 @@ using backend.person.modellibrary.ViewModel;
 
 namespace backend.person.api.Services;
 
-public class EstoqueMovimentoService : IEstoqueMovimentoService
+public class EstoqueMovimentoService( IPersonDataContext context) : IEstoqueMovimentoService
 {
-    private readonly IEstoqueMovimentoRepository _estoqueMovimentoRepository;
-    private readonly IMapper _mapper;
-
-    public EstoqueMovimentoService(IEstoqueMovimentoRepository estoqueMovimentoRepository, IMapper mapper)
-    {
-        _estoqueMovimentoRepository = estoqueMovimentoRepository;
-        _mapper = mapper;
-    }
-
-    public PagedList<EstoqueMovimento> GetList(string? ids, int IdProduto, int IdEstoqueEvento,
-        int page, int pageSize)
-    {
-        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-        return _estoqueMovimentoRepository.GetList(splittedIds, IdProduto, IdEstoqueEvento, page, pageSize);
-    }
-
-    
-    public EstoqueMovimento Entrada (CreateEstoqueMovimentoDto estoqueMovimentoDto)
-    {
-      var entrada = _mapper.Map<EstoqueMovimento>(estoqueMovimentoDto);
-
-      entrada.IdEstoqueEvento = (int)EEstoqueEvento.Entrada;
-      entrada.DtInserido = DateTime.Now;
-      return _estoqueMovimentoRepository.Create(entrada);
-    }
-
-    
-    public EstoqueMovimento Saida (CreateEstoqueMovimentoDto estoqueMovimentoDto)
-    {
-        var saida = _mapper.Map<EstoqueMovimento>(estoqueMovimentoDto);
-        saida.IdEstoqueEvento = (int)EEstoqueEvento.Saida;
-        saida.DtInserido = DateTime.Now;
-        return _estoqueMovimentoRepository.Create(saida);
-    }
-
    
+   
+
+
+    public PagedList<EstoqueMovimento> GetList (int[]? ids ,int? idProduto,int? idEstoqueEvento, 
+        int page = 0, int pageSize = 0)
+    {
+        var query =
+            from estoqueMovimento in context.EstoqueMovimento
+            where
+                (ids == null || ids.Length == 0 || ids.Contains(estoqueMovimento.Id))
+                &&(idProduto == null || idProduto == estoqueMovimento.IdProduto)
+                &&(idEstoqueEvento == null || idEstoqueEvento == estoqueMovimento.Id)
+            select estoqueMovimento;
+
+        return PagedList<EstoqueMovimento>.Create(query, page, pageSize);
+    }
+
+    
+    public EstoqueMovimento Entrada (EstoqueMovimento estoqueMovimento)
+    {
+        estoqueMovimento.IdEstoqueEvento = (int) EEstoqueEvento.Entrada;
+        estoqueMovimento.DtInserido =DateTime.Now;
+        return Create(estoqueMovimento);
+    }
+
+    
+    public EstoqueMovimento Saida (EstoqueMovimento estoqueMovimento)
+    {
+       
+       return Create(estoqueMovimento);
+        
+    }
+
+    public EstoqueMovimento Create (EstoqueMovimento estoqueMovimento)
+    {
+        context.EstoqueMovimento.Add(estoqueMovimento);
+        context.SaveChanges();
+        return estoqueMovimento;
+    }
     
     
 }

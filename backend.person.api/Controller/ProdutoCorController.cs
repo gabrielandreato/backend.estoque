@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using backend.person.api.Services.Interfaces;
 using backend.person.datalibrary.Dto;
+using backend.person.modellibrary.DataModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.person.api.Controller;
@@ -12,13 +13,13 @@ public class ProdutoCorController : ControllerBase
 {
     private readonly IProdutoCorService _produtocorService;
 
-    public ProdutoCorController(IProdutoCorService produtocorService)
+    public ProdutoCorController(IProdutoCorService produtocorService) 
     {
         _produtocorService = produtocorService;
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateProdutoCorDto produtoCor)
+    public IActionResult Create([FromBody] ProdutoCor produtoCor)
     {
         try
         {
@@ -45,7 +46,7 @@ public class ProdutoCorController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] UpdateProdutoCorDto produtoCor)
+    public IActionResult Update([FromRoute] int id, [FromBody] ProdutoCor produtoCor)
     {
         try
         {

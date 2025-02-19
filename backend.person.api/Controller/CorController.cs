@@ -1,5 +1,6 @@
 using backend.person.api.Services.Interfaces;
 using backend.person.datalibrary.Dto;
+using backend.person.modellibrary.DataModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.person.api.Controller;
@@ -7,21 +8,16 @@ namespace backend.person.api.Controller;
   [ApiController]
   [Route("[controller]")]
 
-public class CorController : ControllerBase
+public class CorController( ICorService corService) : ControllerBase
 {
-    private readonly ICorService _corService;
-
-    public CorController(ICorService corService)
-    {
-        _corService = corService;
-    }
-
+    
+    
     [HttpPost]
-    public IActionResult Create([FromBody] CreateCorDto cor)
+    public IActionResult Create([FromBody] Cor cor)
     {
         try
         {
-            return Ok(_corService.Create(cor));
+            return Ok(corService.Create(cor));
         }
         catch (Exception e)
         {
@@ -35,7 +31,7 @@ public class CorController : ControllerBase
     {
         try
         {
-            return Ok(_corService.GetByPk(id));
+            return Ok(corService.GetByPk(id));
         }
         catch (Exception e)
         {
@@ -48,7 +44,7 @@ public class CorController : ControllerBase
     {
         try
         {
-            return Ok(_corService.Remove(id));
+            return Ok(corService.Remove(id));
         }
         catch (Exception e)
         {
@@ -57,11 +53,11 @@ public class CorController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] UpdateCorDto cor)
+    public IActionResult Update([FromRoute] int id, [FromBody] Cor cor)
     {
         try
         {
-            return Ok(_corService.Update(id, cor));
+            return Ok(corService.Update(id, cor));
         }
         catch (Exception e)
         {
@@ -71,12 +67,12 @@ public class CorController : ControllerBase
 
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids = null,
+    public IActionResult GetList([FromQuery] int[]? ids = null,
         string? descricao = null, int page = 0, int pageSize = 0)
     {
         try
         {
-            return Ok(_corService.GetList(ids, descricao, page, pageSize));
+            return Ok(corService.GetList(ids, descricao, page, pageSize));
         }
         catch (Exception e)
         {

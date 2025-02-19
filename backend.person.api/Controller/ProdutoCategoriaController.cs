@@ -1,5 +1,6 @@
 using backend.person.api.Services.Interfaces;
 using backend.person.datalibrary.Dto;
+using backend.person.modellibrary.DataModel;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +20,11 @@ public class ProdutoCategoriaController : ControllerBase
 
     [HttpPost]
 
-    public IActionResult Create([FromBody] CreateProdutoCategoriaDto produtocategoria)
+    public IActionResult Create([FromBody] ProdutoCategoria produtoCategoria)
     {
         try
         {
-            return Ok(_produtocategoriaService.Create(produtocategoria));
+            return Ok(_produtocategoriaService.Create(produtoCategoria));
         }
         catch (Exception e)
         {
@@ -60,12 +61,12 @@ public class ProdutoCategoriaController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] UpdateProdutoCategoriaDto produtocategoria)
+    public IActionResult Update([FromRoute] int id, [FromBody] ProdutoCategoria produtoCategoria)
     {
         try
         {
 
-            return Ok(_produtocategoriaService.Update(id, produtocategoria));
+            return Ok(_produtocategoriaService.Update(id, produtoCategoria));
         }
         catch (Exception e)
         {

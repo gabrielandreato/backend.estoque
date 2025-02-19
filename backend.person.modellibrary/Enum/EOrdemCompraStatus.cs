@@ -9,8 +9,4 @@ public enum EOrdemCompraStatus
     Comprado = 3,
     Reprovado = 4,
    
-   
-   
-    
-    
 }

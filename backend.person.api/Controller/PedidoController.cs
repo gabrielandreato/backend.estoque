@@ -1,5 +1,6 @@
 using backend.person.api.Services.Interfaces;
 using backend.person.datalibrary.Dto;
+using backend.person.modellibrary.DataModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.person.api.Controller;
@@ -16,7 +17,7 @@ public class PedidoController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreatePedidoDto pedido)
+    public IActionResult Create([FromBody] Pedido pedido)
     {
         try
         {
@@ -42,12 +43,12 @@ public class PedidoController : ControllerBase
         }
     }
 
-    [HttpPut]
-    public IActionResult Update([FromRoute] int id, [FromBody] UpdatePedidoDto pedidoDto)
+    [HttpPut("{id}")]
+    public IActionResult Update([FromRoute] int id, [FromBody] Pedido pedido)
     {
         try
         {
-            return Ok(_pedidoService.Update(id, pedidoDto));
+            return Ok(_pedidoService.Update(id, pedido));
         }
         catch(Exception e)
         {
@@ -84,11 +85,11 @@ public class PedidoController : ControllerBase
     }
     
     [HttpPost("PedidoComItens")]
-    public IActionResult PedidoComItens([FromBody] CreatePedidoComItensDto pedidoItens)
+    public IActionResult PedidoComItens([FromBody] CreatePedidoComItensDto pedidoComItensDto)
     {
         try
         {
-            return Ok(_pedidoService.PedidoComItens(pedidoItens));
+            return Ok(_pedidoService.PedidoComItens(pedidoComItensDto));
         }
         catch (Exception e)
         {

@@ -7,13 +7,13 @@ namespace backend.person.api.Services.Interfaces
 {
     public interface IProdutoService
     {
-        Produto Create(CreateProdutoDto produtoDto);
+        Produto Create(Produto produto);
 
         Produto GetByPk(int id);
 
         Produto Remove(int id);
         
-        Produto Update (int id, UpdateProdutoDto updateProdutoDto);
+        Produto Update (int id, Produto produto);
         PagedList<Produto> GetList(string? ids, string? descricao,
         int page, int pageSize, int? idMarca);
         

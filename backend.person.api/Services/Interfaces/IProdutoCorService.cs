@@ -6,11 +6,11 @@ namespace backend.person.api.Services.Interfaces;
 
 public interface IProdutoCorService
 {
-   ProdutoCor Create(CreateProdutoCorDto produtoCorDto);
+   ProdutoCor Create(ProdutoCor produtoCor);
 
    ProdutoCor GetByPk(int id);
    
-   ProdutoCor Update(int id,UpdateProdutoCorDto produtoCorDto);
+   ProdutoCor Update(int id,ProdutoCor produtoCor);
    
    ProdutoCor Delete (int id);
    PagedList<ProdutoCor>GetList (string? ids,int? idProduto, int? idCor,

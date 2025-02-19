@@ -12,7 +12,7 @@ public interface IProdutoCategoriaRepository
     
     ProdutoCategoria Remove(int id);
     
-    ProdutoCategoria Update(int id,UpdateProdutoCategoriaDto updateprodutocategoriaDto);
+    ProdutoCategoria Update(int id,ProdutoCategoria produtoCategoria);
     
     PagedList<ProdutoCategoria> GetList(int[]? ids = null, string? descricao = null, 
         int page = 0, int pageSize = 0);

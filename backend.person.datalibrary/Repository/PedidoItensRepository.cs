@@ -10,12 +10,12 @@ namespace backend.person.datalibrary.Repository;
 public class PedidoItensRepository : IPedidoItensRepository
 {
     private readonly IPersonDataContext _context;
-    private readonly IMapper _mapper;
+   
 
-    public PedidoItensRepository(IPersonDataContext context, IMapper mapper)
+    public PedidoItensRepository(IPersonDataContext context)
     {
         _context = context;
-        _mapper = mapper;
+        
     }
 
 
@@ -41,10 +41,11 @@ public class PedidoItensRepository : IPedidoItensRepository
 
     public PedidoItens Update(int id, UpdatePedidoItensDto pedidoItensDto)
     {
-        var pedidoItens = GetByPk(id);
-        _mapper.Map(pedidoItensDto, pedidoItens);
+        var pedidoItensAtualizado = GetByPk(id);
+        pedidoItensAtualizado.IdPedido = pedidoItensDto.IdPedido;
+        pedidoItensAtualizado.IdProduto = pedidoItensDto.IdProduto;
         _context.SaveChanges();
-        return pedidoItens;
+        return pedidoItensAtualizado;
     } 
     
     public PagedList<PedidoItens> GetList(int[]? ids, int? idPedido,int? idProduto, int? quantidade, 

@@ -6,12 +6,12 @@ namespace backend.person.api.Services.Interfaces;
 
 public interface IOrdemCompraService
 {
-    OrdemCompra  Create(CreateOrdemCompraDto ordemCompra);
+    OrdemCompra  Create(OrdemCompra ordemCompra);
 
-    OrdemCompra Update(int id , UpdateOrdemCompraDto ordemCompraDto);
+    OrdemCompra Update(int id , OrdemCompra ordemCompra);
     OrdemCompra GetByPk(int id);
     OrdemCompra Remove(int id);
-    PagedList<OrdemCompra> GetList (string? ids, int? idproduto, int? valor, int? idOrdemCompraStatus, int page, int pageSize);
+    PagedList<OrdemCompra> GetList (int[]? ids, int? idproduto, int? valor, int? idOrdemCompraStatus, int page, int pageSize);
     OrdemCompra Aprovar (int id);
     OrdemCompra Comprar (int id);
     OrdemCompra Reprovar (int id,ReprovarOrdemCompraDto ordemCompraDto);

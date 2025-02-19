@@ -12,15 +12,14 @@ public class ProdutoCategoriaRepository : IProdutoCategoriaRepository
 {
     private readonly IPersonDataContext _context;
 
-    private readonly IMapper _mapper;
-    
-    public ProdutoCategoriaRepository(IPersonDataContext context , IMapper mapper)
+
+
+    public ProdutoCategoriaRepository(IPersonDataContext context)
     {
-        _context = context; 
-        _mapper = mapper;
+        _context = context;
     }
-    
-    
+
+
     public ProdutoCategoria Create(ProdutoCategoria produtocategoria)
     {
         _context.ProdutoCategoria.Add(produtocategoria);
@@ -48,12 +47,12 @@ public class ProdutoCategoriaRepository : IProdutoCategoriaRepository
         return produtocategoria;
     }
 
-    public ProdutoCategoria Update(int id, UpdateProdutoCategoriaDto updateprodutocategoria)
+    public ProdutoCategoria Update(int id, ProdutoCategoria produtoCategoria)
     {
-        var produtocategoria = GetByPk(id);
-        _mapper.Map(updateprodutocategoria, produtocategoria);
+        var produtoCategoriaAtualizado = GetByPk(id);
+        produtoCategoriaAtualizado.Descricao = produtoCategoria.Descricao;
         _context.SaveChanges();
-        return produtocategoria;
+        return produtoCategoriaAtualizado;
     }
     
     public PagedList<ProdutoCategoria> GetList(int[]? ids = null, string? descricao = null, 

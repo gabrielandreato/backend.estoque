@@ -32,24 +32,12 @@ using Serilog;
     builder.Services.AddTransient<IPersonRepository, PersonRepository>();
 
     builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
-
-    builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
     
     builder.Services.AddTransient<IProdutoCategoriaRepository, ProdutoCategoriaRepository>();
-    
-    builder.Services.AddTransient<ICorRepository, CorRepository>();
-    
+   
     builder.Services.AddTransient<IProdutoCorRepository, ProdutoCorRepository>();
-
-    builder.Services.AddTransient<IEstoqueEventoRepository, EstoqueEventoRepository>();
     
-    builder.Services.AddTransient<IEstoqueMovimentoRepository, EstoqueMovimentoRepository>();
-
     builder.Services.AddTransient<IOrdemCompraStatusRepository, OrdemCompraStatusRepository>();
-    
-    builder .Services.AddTransient<IOrdemCompraRepository, OrdemCompraRepository>();
-    
-    builder.Services.AddTransient<IOrdemCompraLogRepository, OrdemCompraLogRepository>();
     
     builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
     

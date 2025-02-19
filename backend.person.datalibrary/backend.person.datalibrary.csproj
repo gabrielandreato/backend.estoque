@@ -26,4 +26,9 @@
         <ProjectReference Include="..\backend.person.modellibrary\backend.person.modellibrary.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Dto\UpdateCorDto.cs" />
+      <Compile Remove="Profiles\MarcaProfile.cs" />
+    </ItemGroup>
+
 </Project>

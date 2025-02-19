@@ -37,12 +37,10 @@ public class PedidoStatusRepository : IPedidoStatusRepository
 
     public PedidoStatus Update(int id, PedidoStatus pedidoStatus)
     {
-        var pedidoByPk = GetByPk(id);
-        
-        pedidoByPk.Descricao = pedidoStatus.Descricao;
-        
+        var pedidoStatusDobanco = GetByPk(id);
+        pedidoStatusDobanco.Descricao = pedidoStatus.Descricao;
         _context.SaveChanges();
-        return pedidoStatus;
+        return pedidoStatusDobanco;
     }
 
     public PedidoStatus Remove(int id)

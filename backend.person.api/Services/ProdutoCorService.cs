@@ -10,18 +10,18 @@ namespace backend.person.api.Services;
 public class ProdutoCorService : IProdutoCorService
 {
     private readonly IProdutoCorRepository _produtoCorRepository;
-    private readonly IMapper _mapper;
+    
 
-    public ProdutoCorService(IProdutoCorRepository produtoCorRepository, IMapper mapper)
+    public ProdutoCorService(IProdutoCorRepository produtoCorRepository)
     {
         _produtoCorRepository = produtoCorRepository;
-        _mapper = mapper;
+        
     }
 
-    public ProdutoCor Create(CreateProdutoCorDto produtoCor)
+    public ProdutoCor Create(ProdutoCor produtoCor)
     {
-        var produtocor = _mapper.Map<ProdutoCor>(produtoCor);
-        return _produtoCorRepository.Create(produtocor);
+        
+        return _produtoCorRepository.Create(produtoCor);
     }
 
     public ProdutoCor GetByPk(int id)
@@ -29,9 +29,9 @@ public class ProdutoCorService : IProdutoCorService
         return _produtoCorRepository.GetByPk(id);
     }
 
-    public ProdutoCor Update(int id, UpdateProdutoCorDto updateprodutoCorDto)
+    public ProdutoCor Update(int id, ProdutoCor produtoCor)
     {
-        return _produtoCorRepository.Update(id, updateprodutoCorDto);
+        return _produtoCorRepository.Update(id, produtoCor);
     }
 
     public ProdutoCor Delete(int id)

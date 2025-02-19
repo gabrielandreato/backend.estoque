@@ -6,14 +6,14 @@ namespace backend.person.api.Services.Interfaces;
 
 public interface IMarcaService
 {
-    Marca Create(CreateMarcaDto marcaDto);
+    Marca Create(Marca marca);
     Marca GetByPk(int id);
 
     Marca Remove(int id);
     
-    Marca Update(int id, UpdateMarcaDto updateMarcaDto);
+    Marca Update(int id, Marca marca);
 
-    PagedList<Marca> GetList(string? ids, string? descricao,
+    PagedList<Marca> GetList(int[]? ids, string? descricao,
         int page, int pageSize);
     
     

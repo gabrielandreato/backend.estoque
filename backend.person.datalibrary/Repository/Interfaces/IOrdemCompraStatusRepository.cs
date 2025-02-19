@@ -8,7 +8,7 @@ public interface IOrdemCompraStatusRepository
 {
    OrdemCompraStatus Create (OrdemCompraStatus ordemcompraStatus);
    
-   OrdemCompraStatus Update(int id, UpdateOrdemCompraStatusDto updateOrdemCompraStatusDto);
+   OrdemCompraStatus Update(int id, OrdemCompraStatus ordemCompraStatus);
    OrdemCompraStatus Remove(int id);
 
    OrdemCompraStatus GetByPk(int id);

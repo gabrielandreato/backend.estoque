@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
@@ -7,45 +8,66 @@ using backend.person.modellibrary.Utils;
 
 namespace backend.person.api.Services;
 
-public class OrdemCompraLogService: IOrdemCompraLogSerivce
+public class OrdemCompraLogService(IPersonDataContext _context): IOrdemCompraLogSerivce
 {
-    private readonly IOrdemCompraLogRepository _ordemCompraLogRepository;
-    private readonly IMapper _mapper;
+    
+  
 
-    public OrdemCompraLogService(IOrdemCompraLogRepository ordemCompraLogRepository, IMapper mapper)
-    {
-        _ordemCompraLogRepository = ordemCompraLogRepository;
-        _mapper = mapper;
-    }
+  
 
-    public OrdemCompraLog Create(CreateOrdemCompraLogDto ordemCompraLogDto)
+    public OrdemCompraLog Create(OrdemCompraLog ordemCompraLog)
     {
-        var ordemCompraLog = _mapper.Map<OrdemCompraLog>(ordemCompraLogDto);
-        ordemCompraLog.DtLog =DateTime.Now;
-        return _ordemCompraLogRepository.Create(ordemCompraLog);
+        ordemCompraLog.DtLog = DateTime.Now;
+        _context.OrdemCompraLog.Add(ordemCompraLog);
+        _context.SaveChanges();
+        return ordemCompraLog;
+        
     }
 
 
     public OrdemCompraLog GetByPk(int id)
     {
-        return _ordemCompraLogRepository.GetByPk(id);
+        try
+        {
+            return _context.OrdemCompraLog.First(x => x.Id == id);
+        }
+        catch (Exception e)
+        {
+            throw new ApplicationException("Não foi possivel encontrar o Id", e);
+        }
     }
 
 
-    public OrdemCompraLog Update(int id, UpdateOrdemCompraLogDto ordemCompraLogDto)
+    public OrdemCompraLog Update(int id, OrdemCompraLog ordemCompraLog)
     {
-        return _ordemCompraLogRepository.Update(id, ordemCompraLogDto);
+        var ordemCompraLogAtualizada = GetByPk(id);
+        ordemCompraLogAtualizada.IdOrdemCompraStatus = ordemCompraLog.IdOrdemCompraStatus;
+        ordemCompraLogAtualizada.IdOrdemCompra = ordemCompraLog.IdOrdemCompra;
+        _context.SaveChanges();
+        return ordemCompraLogAtualizada;
     }
 
     public OrdemCompraLog Remove(int id)
     {
-        return _ordemCompraLogRepository.Remove(id);
+        var ordemCompraLog = GetByPk(id);
+        _context.OrdemCompraLog.Remove(ordemCompraLog);
+        _context.SaveChanges();
+        return ordemCompraLog;
     }
         
-    public PagedList<OrdemCompraLog> GetList (string? ids,int idOrdemCompra, int idordemCompraStatus,
-        int page, int pageSize )
+    public PagedList<OrdemCompraLog> GetList (int[]? ids,int? idOrdemCompra, int? idOrdemCompraStatus, 
+        int page = 0, int pageSize = 0)
     {
-        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-        return _ordemCompraLogRepository.GetList(splittedIds,idOrdemCompra,idordemCompraStatus,page,pageSize);
+        var query =
+            from ordemCompraLog in _context.OrdemCompraLog
+            where
+                (ids == null || ids.Length == 0 || ids.Contains(ordemCompraLog.Id))
+                &&(idOrdemCompra == null || idOrdemCompra == idOrdemCompra)
+                &&(idOrdemCompraStatus ==null || idOrdemCompraStatus == ordemCompraLog.IdOrdemCompraStatus)
+                
+            select ordemCompraLog;
+
+        return PagedList<OrdemCompraLog>.Create(query, page, pageSize);
     }
+
 }

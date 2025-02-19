@@ -20,7 +20,7 @@ public class EstoqueMovimentoController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids, int idProduto, int idEstoqueEvento,
+    public IActionResult GetList([FromQuery]int[]? ids, int idProduto, int idEstoqueEvento,
         int page = 0, int pageSize = 0)
     {
         try
@@ -36,11 +36,11 @@ public class EstoqueMovimentoController : ControllerBase
     }
 
     [HttpPost("Entrada")]
-    public IActionResult Entrada([FromBody] CreateEstoqueMovimentoDto estoqueMovimentoDto)
+    public IActionResult Entrada([FromBody] EstoqueMovimento estoqueMovimento)
     {
         try
         {
-            return Ok(_estoqueMovimentoService.Entrada(estoqueMovimentoDto));
+            return Ok(_estoqueMovimentoService.Entrada(estoqueMovimento));
         }
         catch (Exception e)
         {
@@ -49,11 +49,11 @@ public class EstoqueMovimentoController : ControllerBase
     }
 
     [HttpPost("Saida")]
-    public IActionResult Saida([FromBody] CreateEstoqueMovimentoDto estoqueMovimentoDto)
+    public IActionResult Saida([FromBody] EstoqueMovimento estoqueMovimento)
     {
         try
         {
-            return Ok(_estoqueMovimentoService.Saida(estoqueMovimentoDto));
+            return Ok(_estoqueMovimentoService.Saida(estoqueMovimento));
         }
         catch (Exception e)
         {

@@ -1,5 +1,6 @@
 using backend.person.api.Services.Interfaces;
 using backend.person.datalibrary.Dto;
+using backend.person.modellibrary.DataModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.person.api.Controller;
@@ -16,7 +17,7 @@ public class MarcaController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateMarcaDto marca)
+    public IActionResult Create([FromBody] Marca marca)
     {
         try
         {
@@ -57,11 +58,11 @@ public class MarcaController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] UpdateMarcaDto marcaDto)
+    public IActionResult Update(int id, [FromBody] Marca marca)
     {
         try
         {
-            return Ok(_marcaService.Update(id, marcaDto));
+            return Ok(_marcaService.Update(id, marca));
         }
         catch (Exception e)
         {
@@ -70,7 +71,7 @@ public class MarcaController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids = null, string? descricao = null,
+    public IActionResult GetList([FromQuery] int[]? ids = null, string? descricao = null,
         int page = 0, int pageSize = 0)
     {
         try

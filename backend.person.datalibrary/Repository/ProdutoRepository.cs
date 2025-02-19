@@ -49,12 +49,13 @@ public class ProdutoRepository : IProdutoRepository
         return produto;
     }
 
-    public Produto Update(int id, UpdateProdutoDto updateProdutoDto)
+    public Produto Update(int id, Produto produto)
     {
-        var produto = GetByPk(id);
-        _mapper.Map(updateProdutoDto, produto);
-        _context.SaveChanges();
-        return produto;
+        var produtoAtualizado = GetByPk(id);
+        produtoAtualizado.Descricao = produto.Descricao;
+        produtoAtualizado.IdCategoria = produto.IdCategoria;
+        produtoAtualizado.IdMarca = produto.IdMarca;
+        return produtoAtualizado;
     }
 
     public PagedList<Produto> GetList(int[]? ids = null, string? descricao = null, 

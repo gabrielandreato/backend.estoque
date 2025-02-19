@@ -18,7 +18,7 @@ public interface IProdutoRepository
 
     Produto Remove(int id);
 
-    Produto Update(int id, UpdateProdutoDto updateProdutoDto);
+    Produto Update(int id, Produto produto);
 
     PagedList<Produto> GetList(int[]? ids = null, string? descricao = null, 
         int page = 0, int pageSize = 0, int? idMarca = null);

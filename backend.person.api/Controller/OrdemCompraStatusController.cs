@@ -18,7 +18,7 @@ public class OrdemCompraStatusController: ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateOrdemCompraStatusDto ordemCompraStatus)
+    public IActionResult Create([FromBody] OrdemCompraStatus ordemCompraStatus)
     {
         try
         {
@@ -48,8 +48,8 @@ public class OrdemCompraStatusController: ControllerBase
 
 
 
-    [HttpPut]
-    public IActionResult Update([FromRoute]int id ,[FromBody] UpdateOrdemCompraStatusDto ordemCompraStatus)
+    [HttpPut("{id}")]
+    public IActionResult Update([FromRoute]int id ,[FromBody]  OrdemCompraStatus ordemCompraStatus)
     {
         try
         {

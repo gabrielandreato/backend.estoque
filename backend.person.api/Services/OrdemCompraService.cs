@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
@@ -8,53 +9,66 @@ using backend.person.modellibrary.Utils;
 
 namespace backend.person.api.Services;
 
-public class OrdemCompraService : IOrdemCompraService
+public class OrdemCompraService(IPersonDataContext context) : IOrdemCompraService
 {
-    private readonly IOrdemCompraRepository _ordemCompraRepository;
-    private readonly IMapper _mapper;
-    private readonly IEstoqueMovimentoService _estoqueMovimentoService;
-
-    public OrdemCompraService (IOrdemCompraRepository ordemCompraRepository, IMapper mapper, IEstoqueMovimentoService estoqueMovimentoService)
-    {
-        _ordemCompraRepository = ordemCompraRepository;
-        _mapper = mapper;
-        _estoqueMovimentoService = estoqueMovimentoService;
-    }
-
-
-    public OrdemCompra Create( CreateOrdemCompraDto ordemCompraDto)
-    {
-        var ordemcompra = _mapper.Map<OrdemCompra>(ordemCompraDto);
-        ordemcompra.IdOrdemCompraStatus = (int)EOrdemCompraStatus.Pendente;
-        return _ordemCompraRepository.Create(ordemcompra);
+    
+    public OrdemCompra Create(OrdemCompra ordemCompra)
+    { 
+        context.OrdemCompra.Add(ordemCompra);
+        context.SaveChanges();
+        return ordemCompra;
     }
 
     public OrdemCompra GetByPk(int id)
     {
-        return  _ordemCompraRepository.GetByPk(id);
+        try
+        {
+            var ordemCompra = context.OrdemCompra.First(x => x.Id == id);
+            return ordemCompra;
+        }
+        catch (Exception e)
+        {
+            throw new ApplicationException("Não foi possivel encontrar o Id", e);
+        }
     }
     
-    public OrdemCompra Update (int id, UpdateOrdemCompraDto ordemCompraDto)
+    public OrdemCompra Update (int id, OrdemCompra ordemCompra)
     {
-        return _ordemCompraRepository.Update(id, ordemCompraDto);
+        var ordemDeCompraAtualizada = GetByPk(id);
+        ordemDeCompraAtualizada.IdOrdemCompraStatus = ordemCompra.IdOrdemCompraStatus;
+        ordemDeCompraAtualizada.Observacao = ordemCompra.Observacao;
+        context.SaveChanges();
+        return ordemDeCompraAtualizada;
     }
 
     public OrdemCompra Remove(int id)
     {
-        return _ordemCompraRepository.Remove(id);
+        var ordemCompra = GetByPk(id);
+        context.OrdemCompra.Remove(ordemCompra);
+        context.SaveChanges();
+        return ordemCompra;
     }
     
-    public PagedList<OrdemCompra> GetList(string? ids, int? idproduto,int? valor,int? idOrdemCompraStatus, 
-        int page, int pageSize )
+    public PagedList<OrdemCompra> GetList(int[]? ids, int? idproduto, int? valor, int? idOrdemCompraStatus, 
+        int page = 0, int pageSize = 0)
     {
-        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-        return _ordemCompraRepository.GetList(splittedIds,idproduto,valor,idOrdemCompraStatus, page, pageSize);
+        var query =
+            from ordemCompra in context.OrdemCompra
+            where
+                (ids == null || ids.Length == 0 || ids.Contains(ordemCompra.Id))
+                &&(idproduto == null || idproduto == ordemCompra.Id)
+                &&(valor == null || valor == ordemCompra.Valor)
+                &&(idOrdemCompraStatus ==null || idOrdemCompraStatus == ordemCompra.IdOrdemCompraStatus)
+                
+            select ordemCompra;
+
+        return PagedList<OrdemCompra>.Create(query, page, pageSize);
     }
     public OrdemCompra Aprovar (int id)
     {
-        var ordemCompra = _ordemCompraRepository.GetByPk(id);
+        var ordemCompra = GetByPk(id);
         
-        var updateOrdemCompra = new UpdateOrdemCompraDto
+        var updateOrdemCompra = new OrdemCompra()
         {
             IdProduto = ordemCompra.IdProduto,
             Quantidade = ordemCompra.Quantidade,
@@ -62,14 +76,14 @@ public class OrdemCompraService : IOrdemCompraService
             DtAprovacao = DateTime.Now,
             Observacao = ordemCompra.Observacao
         };
-        return _ordemCompraRepository.Update(id,updateOrdemCompra);
+        return Update(id,updateOrdemCompra);
     }
 
     public OrdemCompra Comprar (int id)
     {
-       var ordemDeCompra = _ordemCompraRepository.GetByPk(id);
+       var ordemDeCompra = GetByPk(id);
 
-       var updateOrdemCompra = new UpdateOrdemCompraDto
+       var updateOrdemCompra = new OrdemCompra
        {
           IdProduto = ordemDeCompra.IdProduto,
           Quantidade = ordemDeCompra.Quantidade,
@@ -78,7 +92,7 @@ public class OrdemCompraService : IOrdemCompraService
           
           
        };
-       _estoqueMovimentoService.Entrada(new CreateEstoqueMovimentoDto()
+        var entrada = (new EstoqueMovimento()
         
         {
             IdProduto = ordemDeCompra.IdProduto,
@@ -86,15 +100,15 @@ public class OrdemCompraService : IOrdemCompraService
             Quantidade = ordemDeCompra.Quantidade,
         });
         
-        return _ordemCompraRepository.Update(id,updateOrdemCompra);
+        return Update(id,updateOrdemCompra);
     }
 
     
     public OrdemCompra Reprovar(int id ,ReprovarOrdemCompraDto ordemCompraDto)
     {
-        var ordemDeCompra = _ordemCompraRepository.GetByPk(id);
+        var ordemDeCompra = GetByPk(id);
 
-        var updateOrdemCompra = new UpdateOrdemCompraDto
+        var updateOrdemCompra = new OrdemCompra
         {
            IdProduto = ordemDeCompra.IdProduto,
            Quantidade = ordemDeCompra.Quantidade,
@@ -104,6 +118,6 @@ public class OrdemCompraService : IOrdemCompraService
            
         };
         
-        return _ordemCompraRepository.Update(id, updateOrdemCompra);
+        return Update(id, updateOrdemCompra);
     }
 }

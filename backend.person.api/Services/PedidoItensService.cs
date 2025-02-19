@@ -10,18 +10,23 @@ namespace backend.person.api.Services;
 public class PedidoItensService : IPedidoItensService
 {
     private readonly IPedidoItensRepository _pedidoItensRepository;
-    private readonly IMapper _mapper;
+    
 
-    public PedidoItensService(IPedidoItensRepository pedidoItensRepository, IMapper mapper)
+    public PedidoItensService(IPedidoItensRepository pedidoItensRepository)
     {
         _pedidoItensRepository = pedidoItensRepository;
-        _mapper = mapper;
+       
     }
 
-    public PedidoItens Create(CreatePedidoItensDto pedidoItensDto)
+    public PedidoItens Create (PedidoItens pedidoItens)
     {
-        var pedidoitens = _mapper.Map<PedidoItens>(pedidoItensDto);
-        return _pedidoItensRepository.Create(pedidoitens);
+        var pedidoItensCriado = new PedidoItens
+        {
+            Quantidade = pedidoItens.Quantidade,
+            IdProduto = pedidoItens.IdProduto,
+            IdPedido = pedidoItens.IdPedido,
+        };
+        return _pedidoItensRepository.Create(pedidoItensCriado);
     }
 
     public PedidoItens GetByPk(int id)

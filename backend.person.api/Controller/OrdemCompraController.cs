@@ -1,5 +1,6 @@
 using backend.person.api.Services.Interfaces;
 using backend.person.datalibrary.Dto;
+using backend.person.modellibrary.DataModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.person.api.Controller;
@@ -15,7 +16,7 @@ public class OrdemCompraController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody]CreateOrdemCompraDto ordemCompra)
+    public IActionResult Create([FromBody] OrdemCompra ordemCompra)
     {
         try
         {
@@ -45,11 +46,11 @@ public class OrdemCompraController : ControllerBase
     
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] UpdateOrdemCompraDto ordemCompraDto)
+    public IActionResult Update([FromRoute] int id, [FromBody] OrdemCompra ordemCompra)
     {
         try
         {
-            return Ok(_ordemCompraService.Update(id, ordemCompraDto));
+            return Ok(_ordemCompraService.Update(id, ordemCompra));
         }
         catch (Exception e)
         {
@@ -71,7 +72,7 @@ public class OrdemCompraController : ControllerBase
     }
     
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids ,int? idproduto ,int? valor,int? idOrdemCompraStatus,  
+    public IActionResult GetList([FromQuery] int[]? ids ,int? idproduto ,int? valor,int? idOrdemCompraStatus,  
         int page = 0, int pageSize = 0)
     {
         try
@@ -124,9 +125,5 @@ public class OrdemCompraController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
-    
-    
-    
 }
 

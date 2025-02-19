@@ -11,13 +11,11 @@ namespace backend.person.datalibrary.Repository;
 public class ProdutoCorRepository : IProdutoCorRepository
 {
     private readonly IPersonDataContext _context;
+    
 
-    private readonly IMapper _mapper;
-
-    public ProdutoCorRepository(IPersonDataContext context, IMapper mapper)
+    public ProdutoCorRepository(IPersonDataContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public ProdutoCor Create(ProdutoCor produtoCor)
@@ -39,12 +37,13 @@ public class ProdutoCorRepository : IProdutoCorRepository
         }
     }
 
-    public ProdutoCor Update(int id, UpdateProdutoCorDto updateprodutoCorDto)
+    public ProdutoCor Update (int id, ProdutoCor produtoCor)
     {
-        var produtocor = GetByPk(id);
-        _mapper.Map(updateprodutoCorDto, produtocor);
+        var produtocorDoBanco = GetByPk(id);
+        produtocorDoBanco.IdProduto = produtoCor.IdProduto;
+        produtocorDoBanco.IdCor = produtoCor.IdCor;
         _context.SaveChanges();
-        return produtocor;
+        return produtocorDoBanco;
     }
 
     public ProdutoCor Remove (int id)

@@ -10,7 +10,7 @@ public interface IProdutoCorRepository
 
     ProdutoCor GetByPk(int id);
     
-    ProdutoCor Update(int id, UpdateProdutoCorDto produtoCor);
+    ProdutoCor Update(int id, ProdutoCor produtoCor);
 
     ProdutoCor Remove(int id);
     

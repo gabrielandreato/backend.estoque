@@ -36,11 +36,11 @@ public class PedidoLogRepository : IPedidoLogRepository
 
     public PedidoLog Update(int id, PedidoLog pedidoLog)
     {
-        var pedidolog = GetByPk(id);
-        pedidolog.IdPedido = pedidoLog.IdPedido;
-        pedidolog.IdStatus = pedidoLog.IdStatus;
+        var pedidologDoBanco = GetByPk(id);
+        pedidologDoBanco.IdPedido = pedidoLog.IdPedido;
+        pedidologDoBanco.IdStatus = pedidoLog.IdStatus;
         _context.SaveChanges();
-        return pedidolog;
+        return pedidologDoBanco;
     }
 
     public PedidoLog Remove(int id)

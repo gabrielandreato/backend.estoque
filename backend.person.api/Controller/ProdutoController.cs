@@ -1,6 +1,7 @@
 ﻿using backend.person.api.Services;
 using backend.person.api.Services.Interfaces;
 using backend.person.datalibrary.Dto;
+using backend.person.modellibrary.DataModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace backend.person.api.Controller
@@ -18,7 +19,7 @@ namespace backend.person.api.Controller
 
         [HttpPost]
 
-        public IActionResult Create([FromBody] CreateProdutoDto produto)
+        public IActionResult Create([FromBody] Produto produto)
         {
             try
             {
@@ -58,11 +59,11 @@ namespace backend.person.api.Controller
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] UpdateProdutoDto produtoDto)
+        public IActionResult Update(int id, [FromBody] Produto produto)
         {
             try
             {
-                return Ok(_produtoService.Update(id, produtoDto));
+                return Ok(_produtoService.Update(id, produto));
             }
             catch (Exception e)
             {

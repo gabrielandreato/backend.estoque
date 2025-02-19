@@ -12,31 +12,22 @@ namespace backend.person.api.Services;
 public class PedidoService : IPedidoService
 {
     private readonly IPedidoRepository _pedidoRepository;
-    private readonly IMapper _mapper;
     private readonly IPedidoItensService _pedidoItensService;
     private readonly IPedidoLogService _pedidoLogService;
 
-    public PedidoService(IPedidoRepository pedidoRepository, IMapper mapper, IPedidoItensService pedidoItensService, IPedidoLogService pedidoLogService)
+    public PedidoService(IPedidoRepository pedidoRepository, IPedidoItensService pedidoItensService, IPedidoLogService pedidoLogService)
     {
         _pedidoRepository = pedidoRepository;
-        _mapper = mapper;
+        ;
         _pedidoItensService = pedidoItensService;
         _pedidoLogService = pedidoLogService;
     }
 
-    public Pedido Create (CreatePedidoDto pedidoDto)
+    public Pedido Create (Pedido pedido)
     {
-       var pedido = _mapper.Map<Pedido>(pedidoDto);
        pedido.IdPedidoStatus = (int)EPedidoStatus.Pendente;
-       var pedidoCriado = _pedidoRepository.Create(pedido);
-       var pedidoLog = new PedidoLog
-       {
-           IdPedido = pedidoCriado.Id,
-           IdStatus = pedidoCriado.IdPedidoStatus,
-           DtLogPedido = DateTime.Now,
-       };
-       _pedidoLogService.Create(pedidoLog);
-       return pedidoCriado;
+        return _pedidoRepository.Create(pedido);
+         
     }
     
     public Pedido GetByPk(int id)
@@ -44,9 +35,9 @@ public class PedidoService : IPedidoService
         return _pedidoRepository.GetByPk(id);
     }
 
-    public Pedido Update (int id, UpdatePedidoDto pedidoDto)
+    public Pedido Update (int id, Pedido pedido)
     {
-        return _pedidoRepository.Update(id, pedidoDto);
+        return _pedidoRepository.Update(id, pedido);
     }
 
     public Pedido Remove(int id)
@@ -62,7 +53,7 @@ public class PedidoService : IPedidoService
 
     public Pedido PedidoComItens (CreatePedidoComItensDto pedidoItensDto)
     {
-        var pedidoDto = new CreatePedidoDto()
+        var pedidoDto = new Pedido()
         {
             Observacao = pedidoItensDto.Observacao
         };
@@ -71,7 +62,7 @@ public class PedidoService : IPedidoService
 
         foreach (var item in pedidoItensDto.ListaPedidoItens)
         {
-            var pedidoitens = new CreatePedidoItensDto()
+            var pedidoitens = new PedidoItens()
             {
                IdProduto = item.IdProduto,
                Quantidade = item.Quantidade,
@@ -86,7 +77,7 @@ public class PedidoService : IPedidoService
     {
         var pedido = _pedidoRepository.GetByPk(id);
 
-       var pedidoAtualizado = _pedidoRepository.Update(id, new UpdatePedidoDto()
+       var pedidoAtualizado = _pedidoRepository.Update(id, new Pedido()
         {
             Observacao = pedido.Observacao,
             IdPedidoStatus = (int)EPedidoStatus.Faturado
@@ -106,7 +97,7 @@ public class PedidoService : IPedidoService
     {
         var pedido = GetByPk(id);
         
-        var  pedidoCancelado = _pedidoRepository.Update(id, new UpdatePedidoDto
+        var  pedidoCancelado = _pedidoRepository.Update(id, new Pedido
         {
             Observacao = pedido.Observacao,
             IdPedidoStatus = (int)EPedidoStatus.Cancelado

@@ -10,19 +10,17 @@ namespace backend.person.api.Services;
 public class ProdutoCategoriaService : IProdutoCategoriaService
 {
     private readonly IProdutoCategoriaRepository _produtoCategoriaRepository;
-    private readonly IMapper _mapper;
     
-    public ProdutoCategoriaService(IProdutoCategoriaRepository produtoCategoriaRepository, IMapper mapper)
+    
+    public ProdutoCategoriaService(IProdutoCategoriaRepository produtoCategoriaRepository)
     {
         _produtoCategoriaRepository = produtoCategoriaRepository;
-        _mapper = mapper;
+        
     }
     
-    public ProdutoCategoria Create (CreateProdutoCategoriaDto produtoCategoriaDto)
+    public ProdutoCategoria Create (ProdutoCategoria produtoCategoria)
     {
-        var produtocategoria = _mapper.Map<ProdutoCategoria>(produtoCategoriaDto);
-        return _produtoCategoriaRepository.Create(produtocategoria);
-     
+       return _produtoCategoriaRepository.Create(produtoCategoria);
     }
 
     public ProdutoCategoria GetByPk(int id)
@@ -35,9 +33,10 @@ public class ProdutoCategoriaService : IProdutoCategoriaService
         return _produtoCategoriaRepository.Remove(id);
     }
 
-    public ProdutoCategoria Update (int id,UpdateProdutoCategoriaDto updateprodutoCategoriaDto)
+    public ProdutoCategoria Update (int id,ProdutoCategoria produtoCategoria)
     {
-        return _produtoCategoriaRepository.Update(id, updateprodutoCategoriaDto );
+         return _produtoCategoriaRepository.Update(id, produtoCategoria);
+        
     }
 
     public PagedList<ProdutoCategoria> GetList(string? ids, string? descricao,

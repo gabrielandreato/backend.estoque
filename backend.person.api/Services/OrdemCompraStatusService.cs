@@ -10,18 +10,19 @@ namespace backend.person.api.Services;
 public class OrdemCompraStatusService : IOrdemCompraStatusService
 {
     private readonly IOrdemCompraStatusRepository _ordemCompraStatusRepository;
-    private readonly IMapper _mapper;
+   
 
-    public OrdemCompraStatusService(IOrdemCompraStatusRepository ordemCompraStatusRepository, IMapper mapper)
+    public OrdemCompraStatusService(IOrdemCompraStatusRepository ordemCompraStatusRepository)
     {
         _ordemCompraStatusRepository = ordemCompraStatusRepository;
-        _mapper = mapper;
+      
     }
 
-    public OrdemCompraStatus Create(CreateOrdemCompraStatusDto ordemCompraStatusDto)
+    public OrdemCompraStatus Create(OrdemCompraStatus ordemCompraStatus)
     {
-        var ordemCompraStatus = _mapper.Map<OrdemCompraStatus>(ordemCompraStatusDto);
-        return _ordemCompraStatusRepository.Create(ordemCompraStatus);
+       
+       return _ordemCompraStatusRepository.Create(ordemCompraStatus);
+        
     }
     
     public PagedList<OrdemCompraStatus> GetList(string? ids, string? descricao,
@@ -31,9 +32,10 @@ public class OrdemCompraStatusService : IOrdemCompraStatusService
         return _ordemCompraStatusRepository.GetList(splittedIds, descricao, page, pageSize);
     }
 
-    public OrdemCompraStatus Update(int id, UpdateOrdemCompraStatusDto updateOrdemCompraStatusDto)
+    public OrdemCompraStatus Update(int id, OrdemCompraStatus ordemCompraStatus)
     {
-       return _ordemCompraStatusRepository.Update(id,updateOrdemCompraStatusDto); 
+        return _ordemCompraStatusRepository.Update(id, ordemCompraStatus);
+       
     }
 
     public OrdemCompraStatus Remove(int id)

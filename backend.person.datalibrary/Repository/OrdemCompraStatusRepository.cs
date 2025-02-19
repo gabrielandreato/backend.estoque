@@ -10,12 +10,11 @@ namespace backend.person.datalibrary.Repository;
 public class OrdemCompraStatusRepository : IOrdemCompraStatusRepository
 {
     private readonly IPersonDataContext _context;
-    private readonly IMapper _mapper;
+  
 
-    public OrdemCompraStatusRepository(IPersonDataContext context, IMapper mapper)
+    public OrdemCompraStatusRepository(IPersonDataContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public OrdemCompraStatus Create(OrdemCompraStatus ordemCompraStatus)
@@ -40,12 +39,12 @@ public class OrdemCompraStatusRepository : IOrdemCompraStatusRepository
         return PagedList<OrdemCompraStatus>.Create(query, page, pageSize);
     }
 
-    public OrdemCompraStatus Update(int id, UpdateOrdemCompraStatusDto updateOrdemCompraStatusDto)
+    public OrdemCompraStatus Update(int id, OrdemCompraStatus ordemCompraStatus)
     {
-        var ordemCompraStatus = GetByPk(id);
-        _context.OrdemCompraStatus.Add(ordemCompraStatus);
+        var statusAtualizado = GetByPk(id);
+        statusAtualizado.Descricao = ordemCompraStatus.Descricao;
         _context.SaveChanges();
-        return ordemCompraStatus;
+        return statusAtualizado;
     }
 
 

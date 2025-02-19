@@ -7,12 +7,12 @@ namespace backend.person.api.Services.Interfaces;
 
 public interface IEstoqueEventoService
 {
-    EstoqueEvento Create(CreateEstoqueEventoDto estoqueEventoDto);
+    EstoqueEvento Create(EstoqueEvento estoqueEvento);
     EstoqueEvento GetByPk(int id);
 
     EstoqueEvento Update(int id, EstoqueEvento estoqueEvento);
 
     EstoqueEvento Delete(int id);
-    PagedList<EstoqueEvento> GetList(string? ids, string descricao, int page, int pageSize);
-    PagedList<VwRelatorioEstoque> GetVwRelatorioEstoque(string? idsProdutos);
+    PagedList<EstoqueEvento> GetList(int[]? ids, string descricao, int page, int pageSize);
+    PagedList<VwRelatorioEstoque> GetVwRelatorioEstoque(int[]? idsProduto);
 }

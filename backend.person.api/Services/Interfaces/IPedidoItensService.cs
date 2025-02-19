@@ -6,7 +6,7 @@ namespace backend.person.api.Services.Interfaces;
 
 public interface IPedidoItensService
 {
-    PedidoItens Create(CreatePedidoItensDto pedidoItensDto);
+    PedidoItens Create(PedidoItens pedidoItens);
 
     PedidoItens GetByPk (int id);
     

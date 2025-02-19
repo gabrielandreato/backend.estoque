@@ -7,10 +7,11 @@ namespace backend.person.api.Services.Interfaces;
 
 public interface IEstoqueMovimentoService
 {
-    PagedList<EstoqueMovimento> GetList(string? ids, int IdProduto, int IdEstoqueEvento, int page, int pageSize);
+    PagedList<EstoqueMovimento> GetList(int[]? ids ,int? idProduto,int? idEstoqueEvento, 
+        int page = 0, int pageSize = 0);
 
-    EstoqueMovimento Entrada(CreateEstoqueMovimentoDto estoqueMovimentoDto);
+    EstoqueMovimento Entrada(EstoqueMovimento estoqueMovimento);
 
-    EstoqueMovimento Saida(CreateEstoqueMovimentoDto estoqueMovimentoDto);
+    EstoqueMovimento Saida(EstoqueMovimento estoqueMovimento);
    
 }

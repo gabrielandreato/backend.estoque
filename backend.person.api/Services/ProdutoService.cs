@@ -13,19 +13,17 @@ namespace backend.person.api.Services
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IProdutoCorRepository _produtoCorRepository;
-        private readonly IMapper _mapper;
+       
 
-        public ProdutoService(IProdutoRepository produtoRepository, IMapper mapper, IProdutoCorRepository produtoCorRepository)
+        public ProdutoService(IProdutoRepository produtoRepository, IProdutoCorRepository produtoCorRepository)
         {
             _produtoRepository = produtoRepository;
-            _mapper = mapper;
             _produtoCorRepository = produtoCorRepository;
         }
-        public Produto Create(CreateProdutoDto produtoDto)
+        public Produto Create(Produto produto)
         {
-            var produto = _mapper.Map<Produto>(produtoDto);
-            return _produtoRepository.Create(produto);
-     
+             return _produtoRepository.Create(produto);
+            
         }
 
         public Produto GetByPk(int id)
@@ -46,9 +44,10 @@ namespace backend.person.api.Services
         }
 
 
-        public Produto Update (int id, UpdateProdutoDto updateProdutoDto)
+        public Produto Update (int id, Produto produto)
         {
-            return _produtoRepository.Update(id, updateProdutoDto);
+            return _produtoRepository.Update(id, produto);
+           
         }
 
 

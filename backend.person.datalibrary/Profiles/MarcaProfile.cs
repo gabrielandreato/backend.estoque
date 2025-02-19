@@ -8,7 +8,6 @@ public class MarcaProfile : Profile
 {
     public MarcaProfile()
     {
-        CreateMap<CreateMarcaDto, Marca>();
         
         CreateMap<UpdateMarcaDto, Marca>();
     }
