@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
@@ -7,43 +8,55 @@ using backend.person.modellibrary.Utils;
 
 namespace backend.person.api.Services;
 
-public class PedidoItensService : IPedidoItensService
+public class PedidoItensService(IPersonDataContext context) : IPedidoItensService
 {
-    private readonly IPedidoItensRepository _pedidoItensRepository;
     
-
-    public PedidoItensService(IPedidoItensRepository pedidoItensRepository)
-    {
-        _pedidoItensRepository = pedidoItensRepository;
-       
-    }
-
     public PedidoItens Create (PedidoItens pedidoItens)
     {
-        var pedidoItensCriado = new PedidoItens
-        {
-            Quantidade = pedidoItens.Quantidade,
-            IdProduto = pedidoItens.IdProduto,
-            IdPedido = pedidoItens.IdPedido,
-        };
-        return _pedidoItensRepository.Create(pedidoItensCriado);
+        context.PedidoItens.Add(pedidoItens);
+        context.SaveChanges();
+        return pedidoItens;
     }
 
     public PedidoItens GetByPk(int id)
     {
-        return _pedidoItensRepository.GetByPk(id);
+        try
+        {
+            var pedidoItens = context.PedidoItens.First(x => x.Id == id);
+            return pedidoItens;
+        }
+        catch (Exception e)
+        {
+            throw new ApplicationException("Não foi possivel encontrar o Id", e);
+        }
     }
 
     public PedidoItens Update(int id, UpdatePedidoItensDto pedidoItensDto)
     {
-        return _pedidoItensRepository.Update(id, pedidoItensDto);
+        var pedidoItensAtualizado = GetByPk(id);
+        pedidoItensAtualizado.IdPedido = pedidoItensDto.IdPedido;
+        pedidoItensAtualizado.IdProduto = pedidoItensDto.IdProduto;
+        context.SaveChanges();
+        return pedidoItensAtualizado;
     }
 
-
-    public PagedList<PedidoItens> GetList (string? ids, int idPedido, int idProduto, int quantidade, int page = 0, int pageSize = 0)
+    public PagedList<PedidoItens> GetList (int[]? ids, int? idPedido,int? idProduto, int? quantidade, 
+        int page = 0, int pageSize = 0)
     {
-        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-        return _pedidoItensRepository.GetList(splittedIds,idPedido,idProduto,quantidade,page,pageSize);
+        var query =
+            from pedidoitens in context.PedidoItens
+            where
+
+                (ids == null || ids.Length == 0 || ids.Contains(pedidoitens.Id))
+                && (idPedido == null || idPedido == pedidoitens.IdPedido)
+                && (idProduto == null || idProduto == pedidoitens.IdProduto)
+                &&(quantidade == null || quantidade == pedidoitens.Quantidade)
+                
+            select pedidoitens;
+
+        return PagedList<PedidoItens>.Create(query, page, pageSize);
     }
+    
+    
 
 }

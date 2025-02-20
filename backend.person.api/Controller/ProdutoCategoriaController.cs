@@ -75,7 +75,7 @@ public class ProdutoCategoriaController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids = null, string? descricao = null,
+    public IActionResult GetList([FromQuery] int[]? ids = null, string? descricao = null,
         int page = 0, int pageSize = 0)
     {
         try

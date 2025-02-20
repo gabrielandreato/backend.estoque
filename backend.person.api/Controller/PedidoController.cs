@@ -70,7 +70,7 @@ public class PedidoController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList(string? ids,
+    public IActionResult GetList(int[]? ids,
         string observacao, int idPedidoStatus, int page = 0, int pageSize = 0)
     {
         try

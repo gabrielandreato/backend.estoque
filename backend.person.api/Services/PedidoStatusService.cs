@@ -1,46 +1,62 @@
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
 using backend.person.modellibrary.Utils;
 
 namespace backend.person.api.Services;
 
-public class PedidoStatusService : IPedidoStatusService
+public class PedidoStatusService(IPersonDataContext context) : IPedidoStatusService
 {
-   private readonly IPedidoStatusRepository _pedidoStatusRepository;
-
-   public PedidoStatusService(IPedidoStatusRepository pedidoStatusRepository)
-   {
-      _pedidoStatusRepository = pedidoStatusRepository;
-   }
-
+  
    public PedidoStatus Create(PedidoStatus pedidoStatus)
    {
-      return _pedidoStatusRepository.Create(pedidoStatus);
+      context.PedidoStatus.Add(pedidoStatus);
+      context.SaveChanges();
+      return pedidoStatus;
    }
 
    public PedidoStatus GetByPk(int id)
    {
-      return _pedidoStatusRepository.GetByPk(id);
+      try
+      {
+         var pedidostatus = context.PedidoStatus.First(x => x.Id == id);
+         return pedidostatus;
+      }
+      catch (Exception e)
+      {
+         throw new ApplicationException("Não foi possivel encontrar o Id", e);
+      }
    }
 
-   public PedidoStatus Update(int id, PedidoStatus pedidoStatusDto)
+   public PedidoStatus Update(int id, PedidoStatus pedidoStatus)
    {
-      return _pedidoStatusRepository.Update(id, pedidoStatusDto);
+      var pedidoStatusDobanco = GetByPk(id);
+      pedidoStatusDobanco.Descricao = pedidoStatus.Descricao;
+      context.SaveChanges();
+      return pedidoStatusDobanco;
    }
 
    public PedidoStatus Remove(int id)
    {
-      return _pedidoStatusRepository.Remove(id);
+      var pedidoStatus = GetByPk(id);
+      context.PedidoStatus.Remove(pedidoStatus);
+      context.SaveChanges();
+      return pedidoStatus;
    }
     
-   public PagedList<PedidoStatus> GetList(string? ids,string observacao,  
-      int page, int pageSize )
+   public PagedList<PedidoStatus> GetList(int[]? ids, string? descricao,
+      int page = 0, int pageSize = 0)
    {
-      var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-      return _pedidoStatusRepository.GetList(splittedIds,observacao, page, pageSize);
+      var query =
+         from pedidostatus in context.PedidoStatus
+         where
+            (ids == null || ids.Length == 0 || ids.Contains(pedidostatus.Id))
+            && (descricao == null || descricao == pedidostatus.Descricao)
+         select pedidostatus;
+
+      return PagedList<PedidoStatus>.Create(query, page, pageSize);
    }
-   
    
    
 }

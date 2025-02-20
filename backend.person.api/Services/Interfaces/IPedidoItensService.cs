@@ -12,5 +12,6 @@ public interface IPedidoItensService
     
     PedidoItens Update(int id, UpdatePedidoItensDto pedidoItensDto);
     
-    PagedList<PedidoItens> GetList(string? ids, int idPedido, int idProduto, int quantidade,int page, int pageSize);
+    PagedList<PedidoItens> GetList (int[]? ids, int? idPedido,int? idProduto, int? quantidade, 
+        int page = 0, int pageSize = 0);
 }

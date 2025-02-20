@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository;
 using backend.person.datalibrary.Repository.Interfaces;
@@ -9,59 +10,87 @@ using backend.person.modellibrary.ViewModel;
 
 namespace backend.person.api.Services
 {
-    public class ProdutoService : IProdutoService
+    public class ProdutoService(IPersonDataContext context, IProdutoCorService produtoCorService) : IProdutoService
     {
-        private readonly IProdutoRepository _produtoRepository;
-        private readonly IProdutoCorRepository _produtoCorRepository;
-       
 
-        public ProdutoService(IProdutoRepository produtoRepository, IProdutoCorRepository produtoCorRepository)
-        {
-            _produtoRepository = produtoRepository;
-            _produtoCorRepository = produtoCorRepository;
-        }
         public Produto Create(Produto produto)
         {
-             return _produtoRepository.Create(produto);
-            
+            context.Produto.Add(produto);
+            context.SaveChanges();
+            return produto;
+
         }
 
         public Produto GetByPk(int id)
         {
-            return _produtoRepository.GetByPk(id);
+            try
+            {
+                return context.Produto.First(x => x.Id == id);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException("Não foi possivel encontrar o Id", e);
+            }
         }
 
         public Produto Remove(int id)
         {
-            var produtoCores = _produtoCorRepository.GetList(idProduto: id);
-
-            foreach (var produtoCor in produtoCores.Items)
-            {
-                _produtoCorRepository.Remove(produtoCor.Id);
-            }
-            
-            return _produtoRepository.Remove(id);
+            var produto = GetByPk(id);
+            context.Produto.Remove(produto);
+            context.SaveChanges();
+            return produto;
         }
 
 
-        public Produto Update (int id, Produto produto)
+        public Produto Update(int id, Produto produto)
         {
-            return _produtoRepository.Update(id, produto);
-           
+            var produtoAtualizado = GetByPk(id);
+            produtoAtualizado.Descricao = produto.Descricao;
+            produtoAtualizado.IdCategoria = produto.IdCategoria;
+            produtoAtualizado.IdMarca = produto.IdMarca;
+            return produtoAtualizado;
         }
 
+        public PagedList<Produto> GetList(int[]? ids = null, string? descricao = null,
+            int page = 0, int pageSize = 0, int? idMarca = null)
+        {
+            var query =
+                from produto in context.Produto
+                where
+                    (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
+                    && (descricao == null || descricao == produto.Descricao)
+                    && (idMarca == null || idMarca == produto.IdMarca)
+                select produto;
 
-        public PagedList<Produto> GetList(string? ids, string? descricao,
-        int page, int pageSize, int? idMarca )
-        {
-            var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-            return _produtoRepository.GetList(splittedIds, descricao, page, pageSize, idMarca );
+            return PagedList<Produto>.Create(query, page, pageSize);
         }
-        public PagedList<VwProduto> GetVw(string? ids, string? descricao,
-            int page, int pageSize, int? idMarca, int? idCategoria )
+        public PagedList<VwProduto> GetVw(int[]? ids = null, string? descricao = null, 
+            int page = 0, int pageSize = 0, int? idMarca = null,int? idCategoria = null )
         {
-            var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-            return _produtoRepository.GetVw(splittedIds, descricao, page, pageSize, idMarca, idCategoria );
+            var query =
+                from produto in context.Produto
+                join marca in context.Marca on produto.IdMarca equals marca.Id
+                join produtoCategoria in context.ProdutoCategoria on produto.IdCategoria equals produtoCategoria.Id
+                where
+                    (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
+                    && (descricao == null || descricao == produto.Descricao)
+                    && (idMarca == null || idMarca == produto.IdMarca)
+                    && (idCategoria == null || idCategoria == produto.IdCategoria)
+                
+                select new VwProduto()
+                {
+                    Id = produto.Id,
+                    Descricao = produto.Descricao,
+                    IdMarca = produto.IdMarca,
+                    DescricaoMarca = marca.Descricao,
+                    IdCategoria = produto.IdCategoria,
+                    DescricaoCategoria = produtoCategoria.Descricao,
+                    ProdutoCores = context.ProdutoCor.Where(produtoCor => produtoCor.IdProduto == produto.Id ).ToList(),
+                
+                };
+
+            return PagedList<VwProduto>.Create(query, page, pageSize);
         }
+
     }
 }

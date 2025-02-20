@@ -12,8 +12,8 @@ public interface IProdutoCorService
    
    ProdutoCor Update(int id,ProdutoCor produtoCor);
    
-   ProdutoCor Delete (int id);
-   PagedList<ProdutoCor>GetList (string? ids,int? idProduto, int? idCor,
+   ProdutoCor Remove (int id);
+   PagedList<ProdutoCor>GetList (int[]? ids,int? idProduto, int? idCor,
       int page, int pageSize);
    
 }

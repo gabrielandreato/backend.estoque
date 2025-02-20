@@ -73,7 +73,7 @@ public class PedidoLogController : ControllerBase
 
     [HttpGet]
     public IActionResult GetList
-        ([FromQuery] string? ids, int idPedido, int idStatus, int page = 0, int pageSize=0)
+        ([FromQuery] int[]? ids, int idPedido, int idStatus, int page = 0, int pageSize=0)
     {
         try
         {

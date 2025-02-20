@@ -9,7 +9,7 @@ using backend.person.modellibrary.Utils;
 
 namespace backend.person.api.Services;
 
-public class OrdemCompraService(IPersonDataContext context) : IOrdemCompraService
+public class OrdemCompraService(IPersonDataContext context, IEstoqueMovimentoService estoqueMovimentoService) : IOrdemCompraService
 {
     
     public OrdemCompra Create(OrdemCompra ordemCompra)
@@ -89,18 +89,19 @@ public class OrdemCompraService(IPersonDataContext context) : IOrdemCompraServic
           Quantidade = ordemDeCompra.Quantidade,
           IdOrdemCompraStatus = (int)EOrdemCompraStatus.Comprado,
           Observacao = ordemDeCompra.Observacao
-          
-          
        };
-        var entrada = (new EstoqueMovimento()
-        
+       
+       var  ordemDeCompraAtualizado = Update(id, updateOrdemCompra);
+       
+        estoqueMovimentoService.Entrada (new EstoqueMovimento()
         {
             IdProduto = ordemDeCompra.IdProduto,
             Valor = ordemDeCompra.Valor,
             Quantidade = ordemDeCompra.Quantidade,
         });
-        
-        return Update(id,updateOrdemCompra);
+
+       
+        return ordemDeCompraAtualizado;
     }
 
     

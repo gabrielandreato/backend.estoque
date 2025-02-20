@@ -59,11 +59,11 @@ public class ProdutoCorController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete([FromRoute] int id)
+    public IActionResult Remove ([FromRoute] int id)
     {
         try
         {
-            return Ok(_produtocorService.Delete(id));
+            return Ok(_produtocorService.Remove(id));
         }
         catch (Exception e)
         {
@@ -72,7 +72,7 @@ public class ProdutoCorController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids ,int? idProduto, int? idCor,
+    public IActionResult GetList([FromQuery] int[]? ids ,int? idProduto, int? idCor,
         int page = 0, int pageSize = 0)
     {
         try

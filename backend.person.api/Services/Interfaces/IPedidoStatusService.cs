@@ -11,5 +11,5 @@ public interface IPedidoStatusService
     PedidoStatus GetByPk(int id);
     PedidoStatus Update(int id, PedidoStatus pedidoStatus);
     PedidoStatus Remove(int id);
-    PagedList<PedidoStatus> GetList(string? ids,  string observacao, int page, int pageSize);
+    PagedList<PedidoStatus> GetList(int[]? ids,  string observacao, int page, int pageSize);
 }

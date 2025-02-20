@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
@@ -7,44 +8,61 @@ using backend.person.modellibrary.Utils;
 
 namespace backend.person.api.Services;
 
-public class ProdutoCorService : IProdutoCorService
+public class ProdutoCorService(IPersonDataContext _context) : IProdutoCorService
 {
-    private readonly IProdutoCorRepository _produtoCorRepository;
+   
     
 
-    public ProdutoCorService(IProdutoCorRepository produtoCorRepository)
-    {
-        _produtoCorRepository = produtoCorRepository;
-        
-    }
+   
 
     public ProdutoCor Create(ProdutoCor produtoCor)
     {
-        
-        return _produtoCorRepository.Create(produtoCor);
+        _context.ProdutoCor.Add(produtoCor);
+        _context.SaveChanges();
+        return produtoCor;
     }
 
     public ProdutoCor GetByPk(int id)
     {
-        return _produtoCorRepository.GetByPk(id);
+        try
+        {
+            return _context.ProdutoCor.First(x => x.Id == id);
+        }
+        catch (Exception e)
+        {
+            throw new ApplicationException ("Não foi possivel encontrar o Id",e);
+        }
     }
 
     public ProdutoCor Update(int id, ProdutoCor produtoCor)
     {
-        return _produtoCorRepository.Update(id, produtoCor);
+        var produtocorDoBanco = GetByPk(id);
+        produtocorDoBanco.IdProduto = produtoCor.IdProduto;
+        produtocorDoBanco.IdCor = produtoCor.IdCor;
+        _context.SaveChanges();
+        return produtocorDoBanco;
     }
 
-    public ProdutoCor Delete(int id)
+    public ProdutoCor Remove (int id)
     {
-        return _produtoCorRepository.Remove(id);
+        var produtocor = GetByPk(id);
+        _context.ProdutoCor.Remove(produtocor);
+        _context.SaveChanges();
+        return produtocor;
     }
     
-    public PagedList<ProdutoCor> GetList (string? ids,int? idProduto, int? idCor, 
-        int page, int pageSize)
+    public PagedList<ProdutoCor> GetList (int[]? ids = null, int? IdProduto = null, int? IdCor = null,
+        int page = 0, int pageSize = 0)
     {
-        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-        return _produtoCorRepository.GetList(splittedIds, idProduto, idCor,page, pageSize);
-    }
-    
+        var query = 
+            from produtocor in _context.ProdutoCor
+            where
+                (ids == null || ids.Length == 0 || ids.Contains(produtocor.Id))
+                &&(IdProduto == null || IdProduto == produtocor.IdProduto)
+                &&(IdCor == null || IdCor == produtocor.IdCor)
+            select produtocor;
+
+        return PagedList<ProdutoCor>.Create(query, page, pageSize);
+    }  
     
 }

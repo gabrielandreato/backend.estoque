@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
@@ -9,47 +10,65 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.person.api.Services;
 
-public class PedidoService : IPedidoService
+public class PedidoService(IPersonDataContext context,IPedidoItensService pedidoItensService, IPedidoLogService pedidoLogService) : IPedidoService
 {
-    private readonly IPedidoRepository _pedidoRepository;
-    private readonly IPedidoItensService _pedidoItensService;
-    private readonly IPedidoLogService _pedidoLogService;
-
-    public PedidoService(IPedidoRepository pedidoRepository, IPedidoItensService pedidoItensService, IPedidoLogService pedidoLogService)
-    {
-        _pedidoRepository = pedidoRepository;
-        ;
-        _pedidoItensService = pedidoItensService;
-        _pedidoLogService = pedidoLogService;
-    }
+   
+    
 
     public Pedido Create (Pedido pedido)
     {
-       pedido.IdPedidoStatus = (int)EPedidoStatus.Pendente;
-        return _pedidoRepository.Create(pedido);
-         
+        context.Pedido.Add(pedido);
+        context.SaveChanges();
+        return pedido;
     }
     
     public Pedido GetByPk(int id)
     {
-        return _pedidoRepository.GetByPk(id);
+        try
+        {
+            var pedido = context.Pedido.First(x => x.Id == id);
+            return pedido;
+        }
+        catch (Exception e)
+        {
+            throw new ApplicationException("Não foi possivel encontrar o Id", e);
+        }
     }
 
     public Pedido Update (int id, Pedido pedido)
     {
-        return _pedidoRepository.Update(id, pedido);
+        var pedidoDoBanco = GetByPk(id);
+        pedidoDoBanco.IdPedidoStatus = pedido.IdPedidoStatus;
+        pedidoDoBanco.Observacao = pedido.Observacao;
+        context.SaveChanges();
+        return pedidoDoBanco;
     }
 
     public Pedido Remove(int id)
     {
-        return _pedidoRepository.Remove(id);
+        var pedido = GetByPk(id);
+        context.Pedido.Remove(pedido);
+        context.SaveChanges();
+        return pedido;
+    }
+    
+    public PagedList<Pedido> GetList (int[]? ids, string? observacao, int? idPedidoStatus,
+        int page = 0, int pageSize = 0)
+    {
+        var query =
+            from pedido in context.Pedido
+            where
+
+                (ids == null || ids.Length == 0 || ids.Contains(pedido.Id))
+                && (observacao == null || observacao == pedido.Observacao)
+                && (idPedidoStatus == null || idPedidoStatus == pedido.IdPedidoStatus)
+
+            select pedido;
+
+        return PagedList<Pedido>.Create(query, page, pageSize);
     }
 
-    public PagedList<Pedido> GetList(string? ids, string observacao, int idPedidoStatus, int page, int pageSize)
-    {
-        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-        return _pedidoRepository.GetList(splittedIds,observacao,idPedidoStatus, page, pageSize);
-    }
+    
 
     public Pedido PedidoComItens (CreatePedidoComItensDto pedidoItensDto)
     {
@@ -68,16 +87,16 @@ public class PedidoService : IPedidoService
                Quantidade = item.Quantidade,
                IdPedido = pedido.Id,
             };
-            var pedidoItemCriado =_pedidoItensService.Create(pedidoitens);
+            var pedidoItemCriado = pedidoItensService.Create(pedidoitens);
         }
         return pedido;
     }
 
     public Pedido Faturar(int id)
     {
-        var pedido = _pedidoRepository.GetByPk(id);
+        var pedido = GetByPk(id);
 
-       var pedidoAtualizado = _pedidoRepository.Update(id, new Pedido()
+       var pedidoAtualizado = Update(id, new Pedido()
         {
             Observacao = pedido.Observacao,
             IdPedidoStatus = (int)EPedidoStatus.Faturado
@@ -89,7 +108,7 @@ public class PedidoService : IPedidoService
             IdStatus = pedidoAtualizado.IdPedidoStatus,
             DtLogPedido = DateTime.Now,
         };
-        _pedidoLogService.Create(pedidoLog);
+        pedidoLogService.Create(pedidoLog);
         return pedidoAtualizado;
     }
 
@@ -97,7 +116,7 @@ public class PedidoService : IPedidoService
     {
         var pedido = GetByPk(id);
         
-        var  pedidoCancelado = _pedidoRepository.Update(id, new Pedido
+        var  pedidoCancelado = Update(id, new Pedido
         {
             Observacao = pedido.Observacao,
             IdPedidoStatus = (int)EPedidoStatus.Cancelado
@@ -109,7 +128,7 @@ public class PedidoService : IPedidoService
             IdStatus = pedidoCancelado.IdPedidoStatus,
             DtLogPedido = DateTime.Now,
         };
-        _pedidoLogService.Create(pedidoLog);
+        pedidoLogService.Create(pedidoLog);
         return pedidoCancelado;
 
     }

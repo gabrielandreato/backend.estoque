@@ -14,11 +14,10 @@ namespace backend.person.api.Services.Interfaces
         Produto Remove(int id);
         
         Produto Update (int id, Produto produto);
-        PagedList<Produto> GetList(string? ids, string? descricao,
+        PagedList<Produto> GetList(int[]? ids, string? descricao,
         int page, int pageSize, int? idMarca);
         
-        PagedList<VwProduto> GetVw(string? ids, string? descricao,
+        PagedList<VwProduto> GetVw (int[]? ids, string? descricao,
             int page, int pageSize, int? idMarca, int? idCategoria);
-
     }
 }

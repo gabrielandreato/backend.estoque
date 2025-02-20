@@ -30,24 +30,7 @@ using Serilog;
     #region Repository
 
     builder.Services.AddTransient<IPersonRepository, PersonRepository>();
-
-    builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
-    
-    builder.Services.AddTransient<IProdutoCategoriaRepository, ProdutoCategoriaRepository>();
    
-    builder.Services.AddTransient<IProdutoCorRepository, ProdutoCorRepository>();
-    
-    builder.Services.AddTransient<IOrdemCompraStatusRepository, OrdemCompraStatusRepository>();
-    
-    builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
-    
-    builder.Services.AddTransient<IPedidoStatusRepository, PedidoStatusRepository>();
-
-    builder.Services.AddTransient<IPedidoItensRepository, PedidoItensRepository>();
-
-    builder.Services.AddTransient<IPedidoLogRepository, PedidoLogRepository>();
-    
-     
     #endregion
 
     #region Services

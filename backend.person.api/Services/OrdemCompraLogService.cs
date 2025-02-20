@@ -8,7 +8,7 @@ using backend.person.modellibrary.Utils;
 
 namespace backend.person.api.Services;
 
-public class OrdemCompraLogService(IPersonDataContext _context): IOrdemCompraLogSerivce
+public class OrdemCompraLogService(IPersonDataContext context): IOrdemCompraLogSerivce
 {
     
   
@@ -18,8 +18,8 @@ public class OrdemCompraLogService(IPersonDataContext _context): IOrdemCompraLog
     public OrdemCompraLog Create(OrdemCompraLog ordemCompraLog)
     {
         ordemCompraLog.DtLog = DateTime.Now;
-        _context.OrdemCompraLog.Add(ordemCompraLog);
-        _context.SaveChanges();
+        context.OrdemCompraLog.Add(ordemCompraLog);
+        context.SaveChanges();
         return ordemCompraLog;
         
     }
@@ -29,7 +29,7 @@ public class OrdemCompraLogService(IPersonDataContext _context): IOrdemCompraLog
     {
         try
         {
-            return _context.OrdemCompraLog.First(x => x.Id == id);
+            return context.OrdemCompraLog.First(x => x.Id == id);
         }
         catch (Exception e)
         {
@@ -43,15 +43,15 @@ public class OrdemCompraLogService(IPersonDataContext _context): IOrdemCompraLog
         var ordemCompraLogAtualizada = GetByPk(id);
         ordemCompraLogAtualizada.IdOrdemCompraStatus = ordemCompraLog.IdOrdemCompraStatus;
         ordemCompraLogAtualizada.IdOrdemCompra = ordemCompraLog.IdOrdemCompra;
-        _context.SaveChanges();
+        context.SaveChanges();
         return ordemCompraLogAtualizada;
     }
 
     public OrdemCompraLog Remove(int id)
     {
         var ordemCompraLog = GetByPk(id);
-        _context.OrdemCompraLog.Remove(ordemCompraLog);
-        _context.SaveChanges();
+        context.OrdemCompraLog.Remove(ordemCompraLog);
+        context.SaveChanges();
         return ordemCompraLog;
     }
         
@@ -59,7 +59,7 @@ public class OrdemCompraLogService(IPersonDataContext _context): IOrdemCompraLog
         int page = 0, int pageSize = 0)
     {
         var query =
-            from ordemCompraLog in _context.OrdemCompraLog
+            from ordemCompraLog in context.OrdemCompraLog
             where
                 (ids == null || ids.Length == 0 || ids.Contains(ordemCompraLog.Id))
                 &&(idOrdemCompra == null || idOrdemCompra == idOrdemCompra)

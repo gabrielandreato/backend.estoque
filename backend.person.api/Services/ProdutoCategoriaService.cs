@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.person.api.Services.Interfaces;
+using backend.person.datalibrary.DataContext;
 using backend.person.datalibrary.Dto;
 using backend.person.datalibrary.Repository.Interfaces;
 using backend.person.modellibrary.DataModel;
@@ -7,45 +8,59 @@ using backend.person.modellibrary.Utils;
 
 namespace backend.person.api.Services;
 
-public class ProdutoCategoriaService : IProdutoCategoriaService
+public class ProdutoCategoriaService(IPersonDataContext _context) : IProdutoCategoriaService
 {
-    private readonly IProdutoCategoriaRepository _produtoCategoriaRepository;
-    
-    
-    public ProdutoCategoriaService(IProdutoCategoriaRepository produtoCategoriaRepository)
-    {
-        _produtoCategoriaRepository = produtoCategoriaRepository;
-        
-    }
+   
     
     public ProdutoCategoria Create (ProdutoCategoria produtoCategoria)
     {
-       return _produtoCategoriaRepository.Create(produtoCategoria);
+        _context.ProdutoCategoria.Add(produtoCategoria);
+        _context.SaveChanges();
+        return produtoCategoria;
     }
 
     public ProdutoCategoria GetByPk(int id)
     {
-        return _produtoCategoriaRepository.GetByPk(id);
+        try
+        {
+            return _context.ProdutoCategoria.First(x => x.Id == id);
+        }
+        catch (Exception e)
+        {
+            throw new ApplicationException("Não foi possivel encontrar o Id", e);
+        }
     }
 
     public ProdutoCategoria Remove(int id)
     {
-        return _produtoCategoriaRepository.Remove(id);
+        var produtocategoria = GetByPk(id);
+        _context.ProdutoCategoria.Remove(produtocategoria);
+        _context.SaveChanges();
+        return produtocategoria;
     }
 
     public ProdutoCategoria Update (int id,ProdutoCategoria produtoCategoria)
     {
-         return _produtoCategoriaRepository.Update(id, produtoCategoria);
-        
+        var produtoCategoriaAtualizado = GetByPk(id);
+        produtoCategoriaAtualizado.Descricao = produtoCategoria.Descricao;
+        _context.SaveChanges();
+        return produtoCategoriaAtualizado;
     }
 
-    public PagedList<ProdutoCategoria> GetList(string? ids, string? descricao,
-        int page, int pageSize )
+    public PagedList<ProdutoCategoria> GetList(int[]? ids = null, string? descricao = null, 
+        int page = 0, int pageSize = 0)
     {
-        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
-        return _produtoCategoriaRepository.GetList(splittedIds, descricao, page, pageSize);
+        var query =
+            from produto in _context.ProdutoCategoria
+            where
+                (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
+                && (descricao == null || descricao == produto.Descricao )
+                
+                
+            select produto;
+
+        return PagedList<ProdutoCategoria>.Create(query, page, pageSize);
     }
-    
        
     
     

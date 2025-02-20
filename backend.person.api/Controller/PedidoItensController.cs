@@ -60,7 +60,7 @@ public class PedidoItensController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids, int idPedido, int idProduto,
+    public IActionResult GetList([FromQuery] int[]? ids, int idPedido, int idProduto,
         int quantidade, int page = 0, int pageSize = 0)
     {
         try

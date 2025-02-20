@@ -14,6 +14,6 @@ namespace backend.person.api.Services.Interfaces;
      
      ProdutoCategoria Update(int id, ProdutoCategoria produtoCategoria);
      
-     PagedList<ProdutoCategoria> GetList (string? ids, string? descricao,
+     PagedList<ProdutoCategoria> GetList (int[]? ids, string? descricao,
          int page, int pageSize);
  }

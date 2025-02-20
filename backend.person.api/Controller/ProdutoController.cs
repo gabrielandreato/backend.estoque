@@ -75,7 +75,7 @@ namespace backend.person.api.Controller
         }
 
         [HttpGet]
-        public IActionResult GetList([FromQuery] string? ids = null, string? descricao = null,
+        public IActionResult GetList([FromQuery] int[]? ids = null, string? descricao = null,
          int page = 0, int pageSize = 0, int? idMarca = null )
         {
             try
@@ -91,7 +91,7 @@ namespace backend.person.api.Controller
         
         
         [HttpGet("VwProduto")]
-        public IActionResult GetVw([FromQuery] string? ids = null, string? descricao = null,
+        public IActionResult GetVw([FromQuery] int[]? ids = null, string? descricao = null,
             int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null)
         {
             try
