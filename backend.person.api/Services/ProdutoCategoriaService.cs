@@ -42,19 +42,19 @@ public class ProdutoCategoriaService(IPersonDataContext _context) : IProdutoCate
     public ProdutoCategoria Update (int id,ProdutoCategoria produtoCategoria)
     {
         var produtoCategoriaAtualizado = GetByPk(id);
-        produtoCategoriaAtualizado.Descricao = produtoCategoria.Descricao;
+        produtoCategoriaAtualizado.DescCategoria = produtoCategoria.DescCategoria;
         _context.SaveChanges();
         return produtoCategoriaAtualizado;
     }
 
-    public PagedList<ProdutoCategoria> GetList(int[]? ids = null, string? descricao = null, 
+    public PagedList<ProdutoCategoria> GetList(int[]? ids = null, string? DescCategoria = null, 
         int page = 0, int pageSize = 0)
     {
         var query =
             from produto in _context.ProdutoCategoria
             where
                 (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
-                && (descricao == null || descricao == produto.Descricao )
+                && (DescCategoria == null || DescCategoria == produto.DescCategoria )
                 
                 
             select produto;

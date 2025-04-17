@@ -13,9 +13,11 @@ public interface IPersonDataContext
     
     public DbSet<ProdutoCategoria> ProdutoCategoria { get; set; }
     
-    public DbSet<Cor> Cor { get; set; }
     
-   public DbSet<ProdutoCor> ProdutoCor { get; set; }
+    
+   
+    
+   
    public DbSet<EstoqueEvento> EstoqueEvento { get; set; }
    public DbSet<EstoqueMovimento> EstoqueMovimento { get; set; }
    
@@ -31,6 +33,10 @@ public interface IPersonDataContext
    public DbSet<PedidoItens> PedidoItens { get; set; }
    
    public DbSet<PedidoLog> PedidoLog { get; set; }
+   
+   public DbSet<Material> Material { get; set; }
+   
+   public DbSet<Cliente> Cliente { get; set; }
    
    
    

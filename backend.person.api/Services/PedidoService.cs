@@ -39,7 +39,7 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
     {
         var pedidoDoBanco = GetByPk(id);
         pedidoDoBanco.IdPedidoStatus = pedido.IdPedidoStatus;
-        pedidoDoBanco.Observacao = pedido.Observacao;
+        pedidoDoBanco.Descricao = pedido.Descricao;
         context.SaveChanges();
         return pedidoDoBanco;
     }
@@ -60,7 +60,7 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
             where
 
                 (ids == null || ids.Length == 0 || ids.Contains(pedido.Id))
-                && (observacao == null || observacao == pedido.Observacao)
+                && (observacao == null || observacao == pedido.Descricao)
                 && (idPedidoStatus == null || idPedidoStatus == pedido.IdPedidoStatus)
 
             select pedido;
@@ -74,7 +74,10 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
     {
         var pedidoDto = new Pedido()
         {
-            Observacao = pedidoItensDto.Observacao
+            IdCategoria = pedidoItensDto.IdCategoria,
+            IdMarca = pedidoItensDto.IdMarca,
+            IdMaterial = pedidoItensDto.IdMaterial,
+           
         };
         
         var pedido = Create(pedidoDto);
@@ -83,9 +86,10 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
         {
             var pedidoitens = new PedidoItens()
             {
-               IdProduto = item.IdProduto,
-               Quantidade = item.Quantidade,
-               IdPedido = pedido.Id,
+               // IdPedido = pedidoItensDto.IdPedido,
+               // Quantidade = pedidoItensDto.IdPedido,
+                //Preco = pedidoItensDto.IdPedido
+              
             };
             var pedidoItemCriado = pedidoItensService.Create(pedidoitens);
         }
@@ -98,7 +102,7 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
 
        var pedidoAtualizado = Update(id, new Pedido()
         {
-            Observacao = pedido.Observacao,
+            Descricao = pedido.Descricao,
             IdPedidoStatus = (int)EPedidoStatus.Faturado
         });
 
@@ -118,7 +122,7 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
         
         var  pedidoCancelado = Update(id, new Pedido
         {
-            Observacao = pedido.Observacao,
+            
             IdPedidoStatus = (int)EPedidoStatus.Cancelado
         });
 

@@ -10,11 +10,6 @@ namespace backend.person.api.Services;
 
 public class OrdemCompraLogService(IPersonDataContext context): IOrdemCompraLogSerivce
 {
-    
-  
-
-  
-
     public OrdemCompraLog Create(OrdemCompraLog ordemCompraLog)
     {
         ordemCompraLog.DtLog = DateTime.Now;
@@ -23,7 +18,6 @@ public class OrdemCompraLogService(IPersonDataContext context): IOrdemCompraLogS
         return ordemCompraLog;
         
     }
-
 
     public OrdemCompraLog GetByPk(int id)
     {
@@ -36,7 +30,6 @@ public class OrdemCompraLogService(IPersonDataContext context): IOrdemCompraLogS
             throw new ApplicationException("Não foi possivel encontrar o Id", e);
         }
     }
-
 
     public OrdemCompraLog Update(int id, OrdemCompraLog ordemCompraLog)
     {
@@ -54,7 +47,6 @@ public class OrdemCompraLogService(IPersonDataContext context): IOrdemCompraLogS
         context.SaveChanges();
         return ordemCompraLog;
     }
-        
     public PagedList<OrdemCompraLog> GetList (int[]? ids,int? idOrdemCompra, int? idOrdemCompraStatus, 
         int page = 0, int pageSize = 0)
     {
@@ -63,11 +55,11 @@ public class OrdemCompraLogService(IPersonDataContext context): IOrdemCompraLogS
             where
                 (ids == null || ids.Length == 0 || ids.Contains(ordemCompraLog.Id))
                 &&(idOrdemCompra == null || idOrdemCompra == idOrdemCompra)
-                &&(idOrdemCompraStatus ==null || idOrdemCompraStatus == ordemCompraLog.IdOrdemCompraStatus)
+                &&(idOrdemCompraStatus ==null ||
+                   idOrdemCompraStatus == ordemCompraLog.IdOrdemCompraStatus)
                 
             select ordemCompraLog;
 
         return PagedList<OrdemCompraLog>.Create(query, page, pageSize);
     }
-
 }

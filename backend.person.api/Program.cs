@@ -43,10 +43,6 @@ using Serilog;
     
     builder.Services.AddTransient<IProdutoCategoriaService, ProdutoCategoriaService>();
     
-    builder.Services.AddTransient<ICorService, CorService>();
-    
-    builder.Services.AddTransient<IProdutoCorService, ProdutoCorService>();
-    
     builder.Services.AddTransient<IEstoqueEventoService, EstoqueEventoService>();
 
     builder.Services.AddTransient<IEstoqueMovimentoService, EstoqueMovimentoService>();
@@ -64,6 +60,10 @@ using Serilog;
     builder.Services.AddTransient<IPedidoItensService, PedidoItensService>();
     
     builder.Services.AddTransient<IPedidoLogService, PedidoLogService>();
+
+    builder.Services.AddTransient<IMaterialService, MaterialService>();
+    
+    builder.Services.AddTransient<IClienteService, ClienteService>();
    
     #endregion
 

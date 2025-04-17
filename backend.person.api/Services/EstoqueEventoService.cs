@@ -21,7 +21,6 @@ public class EstoqueEventoService(IPersonDataContext context) : IEstoqueEventoSe
         context.EstoqueEvento.Add(estoqueEvento);
         context.SaveChanges();
         return estoqueEvento;
-        
     }
     
 

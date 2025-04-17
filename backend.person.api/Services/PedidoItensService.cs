@@ -35,7 +35,7 @@ public class PedidoItensService(IPersonDataContext context) : IPedidoItensServic
     {
         var pedidoItensAtualizado = GetByPk(id);
         pedidoItensAtualizado.IdPedido = pedidoItensDto.IdPedido;
-        pedidoItensAtualizado.IdProduto = pedidoItensDto.IdProduto;
+        pedidoItensAtualizado.Quantidade = pedidoItensDto.IdPedido;
         context.SaveChanges();
         return pedidoItensAtualizado;
     }
@@ -49,7 +49,6 @@ public class PedidoItensService(IPersonDataContext context) : IPedidoItensServic
 
                 (ids == null || ids.Length == 0 || ids.Contains(pedidoitens.Id))
                 && (idPedido == null || idPedido == pedidoitens.IdPedido)
-                && (idProduto == null || idProduto == pedidoitens.IdProduto)
                 &&(quantidade == null || quantidade == pedidoitens.Quantidade)
                 
             select pedidoitens;

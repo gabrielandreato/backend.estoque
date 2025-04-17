@@ -10,7 +10,7 @@ using backend.person.modellibrary.ViewModel;
 
 namespace backend.person.api.Services
 {
-    public class ProdutoService(IPersonDataContext context, IProdutoCorService produtoCorService) : IProdutoService
+    public class ProdutoService(IPersonDataContext context) : IProdutoService
     {
 
         public Produto Create(Produto produto)
@@ -76,17 +76,15 @@ namespace backend.person.api.Services
                     && (descricao == null || descricao == produto.Descricao)
                     && (idMarca == null || idMarca == produto.IdMarca)
                     && (idCategoria == null || idCategoria == produto.IdCategoria)
-                
+
                 select new VwProduto()
                 {
                     Id = produto.Id,
                     Descricao = produto.Descricao,
                     IdMarca = produto.IdMarca,
-                    DescricaoMarca = marca.Descricao,
+                    DescricaoMarca = marca.Marcas,
                     IdCategoria = produto.IdCategoria,
-                    DescricaoCategoria = produtoCategoria.Descricao,
-                    ProdutoCores = context.ProdutoCor.Where(produtoCor => produtoCor.IdProduto == produto.Id ).ToList(),
-                
+                    DescricaoCategoria = produtoCategoria.DescCategoria,
                 };
 
             return PagedList<VwProduto>.Create(query, page, pageSize);

@@ -9,5 +9,5 @@ public class ProdutoCategoria
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public string Descricao { get; set; }
+    public string DescCategoria { get; set; }
 }

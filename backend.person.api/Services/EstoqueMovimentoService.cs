@@ -14,9 +14,6 @@ namespace backend.person.api.Services;
 public class EstoqueMovimentoService( IPersonDataContext context) : IEstoqueMovimentoService
 {
    
-   
-
-
     public PagedList<EstoqueMovimento> GetList (int[]? ids ,int? idProduto,int? idEstoqueEvento, 
         int page = 0, int pageSize = 0)
     {
@@ -31,7 +28,6 @@ public class EstoqueMovimentoService( IPersonDataContext context) : IEstoqueMovi
         return PagedList<EstoqueMovimento>.Create(query, page, pageSize);
     }
 
-    
     public EstoqueMovimento Entrada (EstoqueMovimento estoqueMovimento)
     {
         estoqueMovimento.IdEstoqueEvento = (int) EEstoqueEvento.Entrada;
@@ -53,7 +49,6 @@ public class EstoqueMovimentoService( IPersonDataContext context) : IEstoqueMovi
         context.SaveChanges();
         return estoqueMovimento;
     }
-    
     
 }
 
