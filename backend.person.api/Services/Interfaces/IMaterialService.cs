@@ -10,5 +10,5 @@ public interface IMaterialService
     Material Update(int id, Material material);
     Material Remove(int id);
     
-    PagedList<Material> GetList (int[]? ids, string materiais, int page, int pageSize);
+    PagedList<Material> GetList (string? ids, string? descricao, int page, int pageSize);
 }

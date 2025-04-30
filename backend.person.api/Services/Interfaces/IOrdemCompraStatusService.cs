@@ -10,6 +10,6 @@ public interface IOrdemCompraStatusService
     OrdemCompraStatus Update(int id, OrdemCompraStatus ordemCompraStatus);
     OrdemCompraStatus Remove(int id);
     OrdemCompraStatus GetByPk(int id);
-    PagedList<OrdemCompraStatus> GetList (int[]? ids, string? descricao,
+    PagedList<OrdemCompraStatus> GetList (string? ids, string? descricao,
         int page, int pageSize);
 }

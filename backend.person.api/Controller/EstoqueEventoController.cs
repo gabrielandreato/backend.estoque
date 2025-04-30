@@ -72,7 +72,7 @@ public class EstoqueEventoController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] int[]? ids, string descricao, int page = 0, int pageSize = 0)
+    public IActionResult GetList([FromQuery] string? ids, string descricao, int page = 0, int pageSize = 0)
     {
         try
         {

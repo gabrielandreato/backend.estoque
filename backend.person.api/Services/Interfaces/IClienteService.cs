@@ -13,5 +13,5 @@ public interface IClienteService
     
     Cliente Remove(int id);
     
-    PagedList<Cliente> GetList(int[]? ids, string? nome, string? dataNascimento, string? cpf, int page, int pageSize);
+    PagedList<Cliente> GetList(string? ids, string? nome, DateTime? dataNascimento, string? cpf, int page, int pageSize);
 }

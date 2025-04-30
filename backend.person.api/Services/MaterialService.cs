@@ -30,7 +30,7 @@ public class MaterialService(IPersonDataContext context):IMaterialService
     public Material Update(int id, Material material)
     {
         var materialAtualizado = GetByPk(id);
-        materialAtualizado.Materiais = material.Materiais;
+        materialAtualizado.Descricao= material.Descricao;
         context.SaveChanges();
         return materialAtualizado;
 
@@ -45,13 +45,16 @@ public class MaterialService(IPersonDataContext context):IMaterialService
     }
     
     
-    public PagedList<Material> GetList (int[]? ids,string materiais, int page = 0, int pageSize = 0)
+    public PagedList<Material> GetList (string? ids,string? descricao, int page = 0, int pageSize = 0)
     {
+       
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
             from material in context.Material
             where
-                (ids == null || ids.Length == 0 || ids.Contains(material.Id))
-                && (materiais == null || materiais == material.Materiais)
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(material.Id))
+                && (descricao == null || descricao == material.Descricao)
             select material;
 
         return PagedList<Material>.Create(query, page, pageSize);

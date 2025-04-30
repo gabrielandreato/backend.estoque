@@ -49,19 +49,20 @@ public class OrdemCompraService(IPersonDataContext context, IEstoqueMovimentoSer
         return ordemCompra;
     }
     
-    public PagedList<OrdemCompra> GetList(int[]? ids, int? idproduto, int? valor, int? idOrdemCompraStatus, 
+    public PagedList<OrdemCompra> GetList(string? ids, int? idProduto = null, int? idOrdemCompraStatus = null , 
         int page = 0, int pageSize = 0)
     {
+        
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
             from ordemCompra in context.OrdemCompra
             where
-                (ids == null || ids.Length == 0 || ids.Contains(ordemCompra.Id))
-                &&(idproduto == null || idproduto == ordemCompra.Id)
-                &&(valor == null || valor == ordemCompra.Valor)
-                &&(idOrdemCompraStatus ==null || idOrdemCompraStatus == ordemCompra.IdOrdemCompraStatus)
-                
-            select ordemCompra;
-
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(ordemCompra.Id))
+                &&(idProduto == null || idProduto == ordemCompra.IdProduto)
+                 &&(idOrdemCompraStatus == null || idOrdemCompraStatus == ordemCompra.IdOrdemCompraStatus)
+               select ordemCompra;
+        
         return PagedList<OrdemCompra>.Create(query, page, pageSize);
     }
     public OrdemCompra Aprovar (int id)

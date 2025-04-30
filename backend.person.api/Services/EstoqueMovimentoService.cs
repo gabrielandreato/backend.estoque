@@ -14,13 +14,15 @@ namespace backend.person.api.Services;
 public class EstoqueMovimentoService( IPersonDataContext context) : IEstoqueMovimentoService
 {
    
-    public PagedList<EstoqueMovimento> GetList (int[]? ids ,int? idProduto,int? idEstoqueEvento, 
+    public PagedList<EstoqueMovimento> GetList (string? ids ,int? idProduto,int? idEstoqueEvento, 
         int page = 0, int pageSize = 0)
     {
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
             from estoqueMovimento in context.EstoqueMovimento
             where
-                (ids == null || ids.Length == 0 || ids.Contains(estoqueMovimento.Id))
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(estoqueMovimento.Id))
                 &&(idProduto == null || idProduto == estoqueMovimento.IdProduto)
                 &&(idEstoqueEvento == null || idEstoqueEvento == estoqueMovimento.Id)
             select estoqueMovimento;

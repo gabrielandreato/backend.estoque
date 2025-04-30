@@ -72,13 +72,13 @@ public class OrdemCompraController : ControllerBase
     }
     
     [HttpGet]
-    public IActionResult GetList([FromQuery] int[]? ids ,int? idproduto ,int? valor,int? idOrdemCompraStatus,  
+    public IActionResult GetList([FromQuery] string? ids ,int? idProduto ,int? idOrdemCompraStatus,  
         int page = 0, int pageSize = 0)
     {
         try
         {
 
-            return Ok(_ordemCompraService.GetList(ids,idproduto,valor,idOrdemCompraStatus,page, pageSize));
+            return Ok(_ordemCompraService.GetList(ids,idProduto,idOrdemCompraStatus,page, pageSize));
         }
         catch (Exception e)
         {

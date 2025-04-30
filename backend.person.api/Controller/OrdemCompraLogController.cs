@@ -73,7 +73,7 @@ public class OrdemCompraLogController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery]int[]? ids, int idOrdemDeCompra,
+    public IActionResult GetList([FromQuery]string? ids, int idOrdemDeCompra,
         int idOrdemCompraStatus, int page = 0, int pageSize = 0)
     {
         try

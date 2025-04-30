@@ -64,7 +64,12 @@ using Serilog;
     builder.Services.AddTransient<IMaterialService, MaterialService>();
     
     builder.Services.AddTransient<IClienteService, ClienteService>();
-   
+
+    builder.Services.AddTransient<ITelefoneService, TelefoneService>();
+
+    builder.Services.AddTransient<IEmailService, EmailService>();
+
+    builder.Services.AddTransient<IEnderecoService, EnderecoService>();
     #endregion
 
     builder.Services.AddControllers();

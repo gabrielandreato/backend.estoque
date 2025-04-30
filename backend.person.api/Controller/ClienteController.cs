@@ -73,13 +73,13 @@ public class ClienteController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] int[]? ids = null, string? Nome = null, string? DataNascimento = null,
-        string? CPF = null, int page = 0, int pageSize = 0)
+    public IActionResult GetList([FromQuery] string? ids = null, string? Nome = null,DateTime? dataNascimento = null,
+        string? cpf = null, int page = 0, int pageSize = 0)
     {
 
         try
         {
-            return Ok(_clienteService.GetList(ids, Nome, DataNascimento, CPF, page, pageSize));
+            return Ok(_clienteService.GetList(ids, Nome, dataNascimento, cpf, page, pageSize));
         }
         catch (Exception e)
         {

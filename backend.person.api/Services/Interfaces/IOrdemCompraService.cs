@@ -11,7 +11,7 @@ public interface IOrdemCompraService
     OrdemCompra Update(int id , OrdemCompra ordemCompra);
     OrdemCompra GetByPk(int id);
     OrdemCompra Remove(int id);
-    PagedList<OrdemCompra> GetList (int[]? ids, int? idproduto, int? valor, int? idOrdemCompraStatus, int page, int pageSize);
+    PagedList<OrdemCompra> GetList (string? ids, int? idProduto ,int? idOrdemCompraStatus, int page, int pageSize);
     OrdemCompra Aprovar (int id);
     OrdemCompra Comprar (int id);
     OrdemCompra Reprovar (int id,ReprovarOrdemCompraDto ordemCompraDto);

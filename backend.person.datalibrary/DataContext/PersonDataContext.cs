@@ -33,6 +33,13 @@ public class PersonDataContext : DbContext, IPersonDataContext
     public DbSet<Material> Material { get; set; }
     
     public DbSet<Cliente> Cliente { get; set; }
+    
+    public DbSet<Telefone> Telefone { get; set; }
+    
+    public DbSet<Email> Email { get; set; }
+    
+    public DbSet<Endereco> Endereco { get; set; }
+    
    
     public PersonDataContext(DbContextOptions options) : base(options)
     {

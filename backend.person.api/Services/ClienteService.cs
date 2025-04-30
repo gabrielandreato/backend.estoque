@@ -12,7 +12,6 @@ public class ClienteService (IPersonDataContext context):IClienteService
     public Cliente Create(Cliente cliente)
     {
         
-       
         if(cliente.DataNascimento > DateTime.Now)
         {
             throw new Exception("A data de nascimento não pode ser maior que hoje");
@@ -29,7 +28,7 @@ public class ClienteService (IPersonDataContext context):IClienteService
          {
              throw new Exception("O CPF deve ter 11 caracteres");
          }
-        
+         
          context.Cliente.Add(cliente);
          context.SaveChanges();
          return cliente;
@@ -40,7 +39,7 @@ public class ClienteService (IPersonDataContext context):IClienteService
     {
         try
         {
-            return context.Cliente.First(x => x.Id == id);
+            return context.Cliente.First(x => x.id == id);
         }
         catch(Exception e)
         {
@@ -70,15 +69,19 @@ public class ClienteService (IPersonDataContext context):IClienteService
         return cliente;
     }
 
-    public PagedList<Cliente> GetList(int[]? ids = null, string? Nome = null, string? DataNascimento = null,
-        string? CPF = null, int page = 0, int pageSize = 0)
+    public PagedList<Cliente> GetList(string? ids = null, string? nome = null, DateTime? dataNascimento = null,
+        string? cpf = null, int page = 0, int pageSize = 0)
     {
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
-            from Cliente in context.Cliente
+            from cliente in context.Cliente
             where
-                (ids == null || ids.Length == 0 || ids.Contains(Cliente.Id))
-                && (Nome == null || Nome == Cliente.Nome)
-            select Cliente;
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(cliente.id))
+                && (nome == null || nome == cliente.Nome)
+                &&(dataNascimento == null || dataNascimento == cliente.DataNascimento)
+                && (cpf == null || cpf == cliente.CPF)
+            select cliente;
 
         return PagedList<Cliente>.Create(query, page, pageSize);
     }

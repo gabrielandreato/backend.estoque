@@ -38,10 +38,18 @@ public interface IPersonDataContext
    
    public DbSet<Cliente> Cliente { get; set; }
    
+   public DbSet<Telefone> Telefone { get; set; }
    
-   
-    
-    IDbContextTransaction? CurrentTransaction();
+   public DbSet<Email> Email { get; set; }
+
+   public DbSet<Endereco> Endereco { get; set; }
+
+
+
+
+
+
+   IDbContextTransaction? CurrentTransaction();
     IDbContextTransaction? BeginTransaction();
     bool IsInMemory();
     void Commit(IDbContextTransaction transaction);

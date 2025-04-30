@@ -12,7 +12,7 @@ public class EstoqueMovimento
     public int Id { get; set; }
     public int IdProduto { get; set; }
     public int Quantidade  { get; set; }
-    public int Valor { get; set; }
+    public decimal Valor { get; set; }
     public int IdEstoqueEvento { get; set; }
     public DateTime DtInserido { get; set; }
 }

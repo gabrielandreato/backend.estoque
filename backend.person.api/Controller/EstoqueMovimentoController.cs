@@ -20,7 +20,7 @@ public class EstoqueMovimentoController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery]int[]? ids, int idProduto, int idEstoqueEvento,
+    public IActionResult GetList([FromQuery]string? ids, int idProduto, int idEstoqueEvento,
         int page = 0, int pageSize = 0)
     {
         try

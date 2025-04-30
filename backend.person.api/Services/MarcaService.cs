@@ -45,13 +45,15 @@ public class MarcaService(IPersonDataContext context) : IMarcaService
         return marcaAtualizada;
     }
     
-    public PagedList<Marca> GetList(int[]? ids = null, string? descricao = null, 
+    public PagedList<Marca> GetList(string? ids = null, string? descricao = null, 
         int page = 0, int pageSize = 0)
     {
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
             from marca in context.Marca
             where
-                (ids == null || ids.Length == 0 || ids.Contains(marca.Id))
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(marca.Id))
                 && (descricao == null || descricao == marca.Marcas)
             select marca;
 

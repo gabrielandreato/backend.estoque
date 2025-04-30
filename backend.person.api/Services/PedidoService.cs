@@ -74,6 +74,7 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
     {
         var pedidoDto = new Pedido()
         {
+            //todo: corrigir propriedade de pedido
             IdCategoria = pedidoItensDto.IdCategoria,
             IdMarca = pedidoItensDto.IdMarca,
             IdMaterial = pedidoItensDto.IdMaterial,
@@ -86,9 +87,9 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
         {
             var pedidoitens = new PedidoItens()
             {
-               // IdPedido = pedidoItensDto.IdPedido,
-               // Quantidade = pedidoItensDto.IdPedido,
-                //Preco = pedidoItensDto.IdPedido
+               IdPedido = pedido.Id,
+                Quantidade = item.Quantidade,
+                Preco = item.Preco,
               
             };
             var pedidoItemCriado = pedidoItensService.Create(pedidoitens);

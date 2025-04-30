@@ -8,7 +8,7 @@ public class Cliente
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-    public int Id { get; set; }
+    public int id { get; set; }
 
     [MinLength(10)]
     public string Nome { get; set; }

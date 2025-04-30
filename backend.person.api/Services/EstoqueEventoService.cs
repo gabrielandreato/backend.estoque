@@ -52,13 +52,15 @@ public class EstoqueEventoService(IPersonDataContext context) : IEstoqueEventoSe
         return estoqueevento;
     }
 
-    public PagedList<EstoqueEvento> GetList(int[]? ids, string? descricao, int page =0, int pageSize = 0)
+    public PagedList<EstoqueEvento> GetList(string? ids, string? descricao, int page =0, int pageSize = 0)
     {
+        
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
         
         var query =
             from estoqueEvento in context.EstoqueEvento
             where
-                (ids == null || ids.Length == 0 || ids.Contains(estoqueEvento.Id))
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(estoqueEvento.Id))
                 &&(descricao == null || estoqueEvento.Descricao == descricao)
             select estoqueEvento;
         

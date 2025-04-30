@@ -13,7 +13,7 @@ public interface IMarcaService
     
     Marca Update(int id, Marca marca);
 
-    PagedList<Marca> GetList(int[]? ids, string? descricao,
+    PagedList<Marca> GetList(string? ids, string? descricao,
         int page, int pageSize);
     
     

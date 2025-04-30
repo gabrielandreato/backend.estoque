@@ -32,8 +32,13 @@ public class TestDataContext: DbContext, IPersonDataContext
     public DbSet<PedidoLog> PedidoLog { get; set; }
     
     public DbSet<Material> Material { get; set; }
-    
     public DbSet<Cliente> Cliente { get; set; }
+    
+    public DbSet<Telefone> Telefone { get; set; }
+    
+    public DbSet<Email> Email { get; set; }
+    
+    public DbSet<Endereco> Endereco { get; set; }
     
     private readonly string? _v = null;
 

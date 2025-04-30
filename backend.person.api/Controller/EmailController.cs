@@ -5,28 +5,27 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.person.api.Controller;
 [ApiController]
 [Route("[controller]")]
-public class MaterialController:ControllerBase
-{
-    private readonly IMaterialService _materialService;
 
-    public MaterialController(IMaterialService materialService)
+public class EmailController:ControllerBase
+{
+    private readonly IEmailService _emailService;
+
+    public EmailController(IEmailService emailService)
     {
-        _materialService = materialService;
+        _emailService = emailService;
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] Material material)
+    public IActionResult Create ([FromBody] Email email)
     {
-
         try
         {
-            return Ok(_materialService.Create(material));
+            return Ok(_emailService.Create(email));
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
-
     }
 
     [HttpGet("{id}")]
@@ -34,8 +33,7 @@ public class MaterialController:ControllerBase
     {
         try
         {
-            var byPk = _materialService.GetByPk(id);
-            return Ok(byPk);
+            return Ok(_emailService.GetByPk(id));
         }
         catch (Exception ex)
         {
@@ -44,11 +42,11 @@ public class MaterialController:ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] Material material)
+    public IActionResult Update([FromRoute] int id, [FromBody] Email email)
     {
         try
         {
-            return Ok(_materialService.Update(id, material));
+            return Ok(_emailService.Update(id, email));
         }
         catch (Exception ex)
         {
@@ -56,32 +54,44 @@ public class MaterialController:ControllerBase
         }
     }
 
+
     [HttpDelete("{id}")]
-    public IActionResult Remove([FromRoute] int id)
+    public IActionResult Remove ([FromRoute] int id)
     {
         try
         {
-            return Ok(_materialService.Remove(id));
+            return Ok(_emailService.Remove(id));
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
     }
-        
+
     [HttpGet]
-    public IActionResult GetList(string? ids,
-        string? descricao, int page = 0, int pageSize = 0)
+    public IActionResult GetList([FromQuery] string? ids = null, int? idCliente = null, string? email = null,
+        int page = 0, int pageSize = 0)
     {
+
         try
         {
-            return Ok(_materialService.GetList(ids,descricao,page,pageSize));
+            return Ok(_emailService.GetList(ids, idCliente, email, page, pageSize));
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            return BadRequest(e.Message);
+            return BadRequest(ex.Message);
         }
         
+        
+        
     }
+    
+        
+        
+        
+        
+        
+    
+    
     
 }

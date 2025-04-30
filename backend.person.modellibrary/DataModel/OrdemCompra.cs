@@ -15,7 +15,7 @@ public class OrdemCompra
 
     public int Quantidade { get; set; }
 
-    public int Valor { get; set; } 
+    public decimal Valor { get; set; } 
     
     public int IdOrdemCompraStatus { get; set; }
 

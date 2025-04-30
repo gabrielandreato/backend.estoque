@@ -18,13 +18,16 @@ public class OrdemCompraStatusService(IPersonDataContext context) : IOrdemCompra
         return ordemCompraStatus;
     }
     
-    public PagedList<OrdemCompraStatus> GetList(int[]? ids = null, string? descricao = null, 
+    public PagedList<OrdemCompraStatus> GetList(string? ids = null, string? descricao = null, 
         int page = 0, int pageSize = 0)
     {
+        
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
             from ordemCompraStatus in context.OrdemCompraStatus
             where
-                (ids == null || ids.Length == 0 || ids.Contains(ordemCompraStatus.Id))
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(ordemCompraStatus.Id))
                 && (descricao == null || descricao == ordemCompraStatus.Descricao )
                 
                 

@@ -13,6 +13,6 @@ public interface IEstoqueEventoService
     EstoqueEvento Update(int id, EstoqueEvento estoqueEvento);
 
     EstoqueEvento Delete(int id);
-    PagedList<EstoqueEvento> GetList(int[]? ids, string descricao, int page, int pageSize);
+    PagedList<EstoqueEvento> GetList(string? ids, string descricao, int page, int pageSize);
     PagedList<VwRelatorioEstoque> GetVwRelatorioEstoque(int[]? idsProduto);
 }
