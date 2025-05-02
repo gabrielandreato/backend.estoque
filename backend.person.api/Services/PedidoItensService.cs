@@ -36,24 +36,27 @@ public class PedidoItensService(IPersonDataContext context) : IPedidoItensServic
         var pedidoItensAtualizado = GetByPk(id);
         pedidoItensAtualizado.IdPedido = pedidoItensDto.IdPedido;
         pedidoItensAtualizado.Quantidade = pedidoItensDto.IdPedido;
+        pedidoItensAtualizado.IdProduto = pedidoItensDto.IdProduto;
         context.SaveChanges();
         return pedidoItensAtualizado;
     }
 
-    public PagedList<PedidoItens> GetList (int[]? ids, int? idPedido,int? idProduto, int? quantidade, 
-        int page = 0, int pageSize = 0)
+    public PagedList<PedidoItens> GetList(string? ids, int? idPedido , int? idProduto, int? quantidade  , int page,
+        int pageSize)
     {
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
-            from pedidoitens in context.PedidoItens
+            from pedidoItens in context.PedidoItens
             where
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(pedidoItens.Id))
+                && (idPedido == null || idPedido == pedidoItens.IdPedido)
+                && (idProduto == null || idProduto == pedidoItens.IdProduto)
+                &&(quantidade == null || quantidade == pedidoItens.Quantidade)
+            select pedidoItens;
 
-                (ids == null || ids.Length == 0 || ids.Contains(pedidoitens.Id))
-                && (idPedido == null || idPedido == pedidoitens.IdPedido)
-                &&(quantidade == null || quantidade == pedidoitens.Quantidade)
-                
-            select pedidoitens;
-
-        return PagedList<PedidoItens>.Create(query, page, pageSize);
+             return PagedList<PedidoItens>.Create(query, page, pageSize);
+        
     }
     
     
