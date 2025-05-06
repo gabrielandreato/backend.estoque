@@ -10,8 +10,10 @@ public interface IPedidoService
     Pedido GetByPk(int id);
     Pedido Update(int id ,Pedido pedido);
     Pedido Remove(int id);
-    PagedList<Pedido> GetList(int[]? ids, string? observacao, int? idPedidoStatus,
-        int page = 0, int pageSize = 0);
+
+    PagedList<Pedido> GetList(string? ids,
+        string observacao, int? idPedidoStatus, int? idCliente,decimal?
+        precoBruto, string? formaDePagamento,decimal? desconto,decimal? taxas, int page = 0, int pageSize = 0);
 
     Pedido PedidoComItens (CreatePedidoComItensDto pedidoComItensDto);
     

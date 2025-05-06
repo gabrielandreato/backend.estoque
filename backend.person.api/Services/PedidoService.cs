@@ -39,7 +39,7 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
     {
         var pedidoDoBanco = GetByPk(id);
         pedidoDoBanco.IdPedidoStatus = pedido.IdPedidoStatus;
-        pedidoDoBanco.Descricao = pedido.Descricao;
+        pedidoDoBanco.Observacao = pedido.Observacao;
         context.SaveChanges();
         return pedidoDoBanco;
     }
@@ -52,17 +52,24 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
         return pedido;
     }
     
-    public PagedList<Pedido> GetList (int[]? ids, string? observacao, int? idPedidoStatus,
-        int page = 0, int pageSize = 0)
+    public PagedList<Pedido> GetList (string? ids,
+        string? observacao, int? idPedidoStatus, int? idCliente,decimal?
+            precoBruto, string? formaDePagamento,decimal? desconto,decimal? taxas, int page = 0, int pageSize = 0)
     {
+        
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
             from pedido in context.Pedido
             where
-
-                (ids == null || ids.Length == 0 || ids.Contains(pedido.Id))
-                && (observacao == null || observacao == pedido.Descricao)
-                && (idPedidoStatus == null || idPedidoStatus == pedido.IdPedidoStatus)
-
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(pedido.Id))
+            &&(observacao == null || observacao == pedido.Observacao)
+            &&(idPedidoStatus == null || idPedidoStatus == pedido.IdPedidoStatus)  
+            &&(idCliente == null || idCliente == pedido.IdCliente)
+            &&(precoBruto == null || precoBruto == pedido.PrecoBruto)
+            &&(formaDePagamento == null || formaDePagamento == pedido.FormaDePagamento)
+            &&(desconto == null || desconto == pedido.Desconto)
+            &&(taxas == null || taxas == pedido.Taxas)    
             select pedido;
 
         return PagedList<Pedido>.Create(query, page, pageSize);
@@ -74,10 +81,12 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
     {
         var pedidoDto = new Pedido()
         {
-            //todo: corrigir propriedade de pedido
-            IdCategoria = pedidoItensDto.IdCategoria,
-            IdMarca = pedidoItensDto.IdMarca,
-            IdMaterial = pedidoItensDto.IdMaterial,
+          IdPedidoStatus = pedidoItensDto.IdPedidoStatus,
+          Observacao = pedidoItensDto.Observacao,
+          Desconto = pedidoItensDto.Desconto,
+          IdCliente = pedidoItensDto.IdCliente,
+          FormaDePagamento = pedidoItensDto.FormaDePagamento,
+          PrecoBruto = pedidoItensDto.PrecoBruto,
            
         };
         
@@ -87,8 +96,8 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
         {
             var pedidoitens = new PedidoItens()
             {
-               IdPedido = pedido.Id,
-                Quantidade = item.Quantidade,
+               IdPedido = pedido.Id, 
+               Quantidade = item.Quantidade,
                 Preco = item.Preco,
               
             };
@@ -103,7 +112,7 @@ public class PedidoService(IPersonDataContext context,IPedidoItensService pedido
 
        var pedidoAtualizado = Update(id, new Pedido()
         {
-            Descricao = pedido.Descricao,
+            Observacao = pedido.Observacao,
             IdPedidoStatus = (int)EPedidoStatus.Faturado
         });
 

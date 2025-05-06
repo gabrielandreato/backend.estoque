@@ -11,25 +11,14 @@ public class
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-
     public int IdPedidoStatus { get; set; }
-    public string Descricao { get; set; }
-
+    public string Observacao   { get; set; }
     public int IdCliente { get; set; }
-
-    public int IdCategoria { get; set; }
-
-    public int IdMaterial { get; set; }
-
-    public int IdMarca { get; set; }
-
-    public decimal PrecoBruto { get; set; }
-
+    public decimal? PrecoBruto { get; set; }
     public string FormaDePagamento { get; set; }
+    public decimal? Desconto { get; set; }
 
-    public decimal Desconto { get; set; }
+    public decimal? Taxas { get; set; }
 
-    public decimal Taxas { get; set; }
-
-    public decimal PrecoFinal { get; set; }
+    
 }
