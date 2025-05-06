@@ -41,8 +41,8 @@ public class PedidoItensService(IPersonDataContext context) : IPedidoItensServic
         return pedidoItensAtualizado;
     }
 
-    public PagedList<PedidoItens> GetList(string? ids, int? idPedido , int? idProduto, int? quantidade  , int page,
-        int pageSize)
+    public PagedList<PedidoItens> GetList(string? ids, int? idPedido, int? idProduto, 
+        int? quantidade,int? idMaterial, int? idCategoria,int? idMarca, int page = 0  ,int pageSize = 0)
     {
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
         
@@ -53,6 +53,9 @@ public class PedidoItensService(IPersonDataContext context) : IPedidoItensServic
                 && (idPedido == null || idPedido == pedidoItens.IdPedido)
                 && (idProduto == null || idProduto == pedidoItens.IdProduto)
                 &&(quantidade == null || quantidade == pedidoItens.Quantidade)
+                && (idMaterial == null || idMaterial == pedidoItens.IdMaterial)
+                && (idCategoria == null || idCategoria == pedidoItens.IdCategoria)
+                && (idMarca == null || idMarca == pedidoItens.IdMarca)
             select pedidoItens;
 
              return PagedList<PedidoItens>.Create(query, page, pageSize);

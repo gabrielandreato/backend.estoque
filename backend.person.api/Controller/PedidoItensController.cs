@@ -60,12 +60,12 @@ public class PedidoItensController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Getlist(string? ids, int? idPedido = null, int? idProduto = null, int? quantidade = null,
+    public IActionResult Getlist(string? ids, int? idPedido , int? idProduto , int? quantidade , int? idMaterial, int? idCategoria, int? idMarca,
         int page = 0, int pageSize = 0)
     {
         try
         {
-            return Ok(_pedidoItensService.GetList(ids, idPedido, idProduto, quantidade, page, pageSize));
+            return Ok(_pedidoItensService.GetList(ids,idPedido,idProduto,quantidade,idMaterial,idCategoria,idMarca,page,pageSize));
         }
         catch(Exception e)
         {
