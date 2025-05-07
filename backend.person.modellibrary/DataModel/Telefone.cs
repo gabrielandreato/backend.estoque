@@ -13,7 +13,7 @@ public class Telefone
 
     public int IdCliente { get; set; }
 
-    public string telefone { get; set; }
+    public string Numero { get; set; }
     
     
 }

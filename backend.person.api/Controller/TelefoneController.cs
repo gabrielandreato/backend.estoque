@@ -73,12 +73,12 @@ public class TelefoneController : ControllerBase
 
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] int[]? ids = null, string? Telefones = null,
-        int? IdCliente = null, int page = 0, int pageSize = 0)
+    public IActionResult GetList([FromQuery] string? ids = null, string? telefone = null,
+        int? idCliente = null, int page = 0, int pageSize = 0)
     {
         try
         {
-            return Ok(_telefoneService.GetList(ids, Telefones, IdCliente, page, pageSize));
+            return Ok(_telefoneService.GetList(ids, telefone, idCliente, page, pageSize));
         }
         catch (Exception e)
         {

@@ -11,5 +11,5 @@ public interface ITelefoneService
     Telefone Update(int id, Telefone telefone);
     
     Telefone Remove(int id);
-    PagedList<Telefone> GetList(int[]? ids, string? telefones, int? idCliente, int page, int pageSize);
+    PagedList<Telefone> GetList(string? ids, string? numero, int? idCliente, int page, int pageSize);
 }
