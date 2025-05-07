@@ -76,12 +76,12 @@ namespace backend.person.api.Controller
 
         [HttpGet]
         public IActionResult GetList([FromQuery] string? ids = null, string? descricao = null,
-         int page = 0, int pageSize = 0, int? idMarca = null )
+         int page = 0, int pageSize = 0, int? idMarca = null, int? idCateggoria = null , int? idMaterial = null )
         {
             try
             {
 
-                return Ok(_produtoService.GetList(ids,  descricao, page, pageSize, idMarca ));
+                return Ok(_produtoService.GetList(ids,descricao,page,pageSize,idMarca,idCateggoria,idMaterial ));
             }
             catch (Exception e)
             {
@@ -92,12 +92,12 @@ namespace backend.person.api.Controller
         
         [HttpGet("VwProduto")]
         public IActionResult GetVw([FromQuery] string? ids = null, string? descricao = null,
-            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null)
+            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null , int? idMaterial = null)
         {
             try
             {
 
-                return Ok(_produtoService.GetVw(ids,  descricao, page, pageSize, idMarca, idCategoria));
+                return Ok(_produtoService.GetVw(ids, descricao, page, pageSize, idMarca, idCategoria, idMaterial));
             }
             catch (Exception e)
             {

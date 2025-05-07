@@ -52,9 +52,8 @@ namespace backend.person.api.Services
         }
 
         public PagedList<Produto> GetList(string? ids = null, string? descricao = null,
-            int page = 0, int pageSize = 0, int? idMarca = null)
+            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null, int? idMaterial = null)
         {
-            
             var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
             
             var query =
@@ -63,12 +62,14 @@ namespace backend.person.api.Services
                     (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(produto.Id))
                     && (descricao == null || descricao == produto.Descricao)
                     && (idMarca == null || idMarca == produto.IdMarca)
+                    && (idCategoria == null || idCategoria == produto.IdCategoria)
+                    && (idMaterial == null || idMaterial == produto.IdMaterial)
                 select produto;
 
             return PagedList<Produto>.Create(query, page, pageSize);
         }
         public PagedList<VwProduto> GetVw(string? ids = null, string? descricao = null, 
-            int page = 0, int pageSize = 0, int? idMarca = null,int? idCategoria = null )
+            int page = 0, int pageSize = 0, int? idMarca = null,int? idCategoria = null, int? idMaterial= null)
         {
             
             var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
@@ -82,6 +83,7 @@ namespace backend.person.api.Services
                     && (descricao == null || descricao == produto.Descricao)
                     && (idMarca == null || idMarca == produto.IdMarca)
                     && (idCategoria == null || idCategoria == produto.IdCategoria)
+                    && (idMaterial == null || idMaterial == produto.IdMaterial)
 
                 select new VwProduto()
                 {

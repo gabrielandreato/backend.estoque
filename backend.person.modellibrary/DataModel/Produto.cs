@@ -16,5 +16,8 @@ namespace backend.person.modellibrary.DataModel
         public int IdMarca { get; set; }
 
         public int IdCategoria { get; set; }
+        
+        public int IdMaterial { get; set; }
+        
     }
 }

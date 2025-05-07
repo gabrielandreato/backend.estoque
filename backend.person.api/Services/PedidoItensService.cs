@@ -53,9 +53,6 @@ public class PedidoItensService(IPersonDataContext context) : IPedidoItensServic
                 && (idPedido == null || idPedido == pedidoItens.IdPedido)
                 && (idProduto == null || idProduto == pedidoItens.IdProduto)
                 &&(quantidade == null || quantidade == pedidoItens.Quantidade)
-                && (idMaterial == null || idMaterial == pedidoItens.IdMaterial)
-                && (idCategoria == null || idCategoria == pedidoItens.IdCategoria)
-                && (idMarca == null || idMarca == pedidoItens.IdMarca)
             select pedidoItens;
 
              return PagedList<PedidoItens>.Create(query, page, pageSize);
