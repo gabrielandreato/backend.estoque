@@ -14,5 +14,5 @@ public interface IPedidoItensService
 
 
     PagedList<PedidoItens> GetList(string? ids, int? idPedido, int? idProduto, 
-        int? quantidade,int? idMaterial, int? idCategoria,int? idMarca, int page ,int pageSize);
+        int? quantidade, int page ,int pageSize);
 }
