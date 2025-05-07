@@ -47,17 +47,17 @@ public class ProdutoCategoriaService(IPersonDataContext _context) : IProdutoCate
         return produtoCategoriaAtualizado;
     }
 
-    public PagedList<ProdutoCategoria> GetList(int[]? ids = null, string? DescCategoria = null, 
+    public PagedList<ProdutoCategoria> GetList (string? ids = null, string? descCategoria = null, 
         int page = 0, int pageSize = 0)
     {
         
-        
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
         
         var query =
             from produto in _context.ProdutoCategoria
             where
-                (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
-                && (DescCategoria == null || DescCategoria == produto.DescCategoria )
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(produto.Id))
+                && (descCategoria == null || descCategoria == produto.DescCategoria )
                 
                 
             select produto;
