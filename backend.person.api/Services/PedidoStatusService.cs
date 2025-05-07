@@ -45,13 +45,17 @@ public class PedidoStatusService(IPersonDataContext context) : IPedidoStatusServ
       return pedidoStatus;
    }
     
-   public PagedList<PedidoStatus> GetList(int[]? ids, string? descricao,
+   public PagedList<PedidoStatus> GetList(string? ids, string? descricao,
       int page = 0, int pageSize = 0)
    {
+      
+      var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+      
+      
       var query =
          from pedidostatus in context.PedidoStatus
          where
-            (ids == null || ids.Length == 0 || ids.Contains(pedidostatus.Id))
+            (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(pedidostatus.Id))
             && (descricao == null || descricao == pedidostatus.Descricao)
          select pedidostatus;
 

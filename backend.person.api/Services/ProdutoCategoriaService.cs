@@ -50,6 +50,9 @@ public class ProdutoCategoriaService(IPersonDataContext _context) : IProdutoCate
     public PagedList<ProdutoCategoria> GetList(int[]? ids = null, string? DescCategoria = null, 
         int page = 0, int pageSize = 0)
     {
+        
+        
+        
         var query =
             from produto in _context.ProdutoCategoria
             where
