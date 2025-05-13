@@ -9,5 +9,5 @@ public interface IPedidoLogService
     PedidoLog GetByPk(int id);
     PedidoLog Update(int id, PedidoLog pedidoLog);
     PedidoLog Remove(int id);
-    PagedList<PedidoLog> GetList(int[]? ids, int? idPedido, int? idStatus, int page = 0, int pageSize =0 );
+    PagedList<PedidoLog> GetList(string? ids, int? idPedido, int? idStatus, int page = 0, int pageSize =0 );
 }

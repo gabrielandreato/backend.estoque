@@ -72,12 +72,12 @@ public class PedidoStatusController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery] int[]? ids,
-        string observacao, int page = 0, int pageSize = 0)
+    public IActionResult GetList([FromQuery] string? ids = null ,
+        string? descricao = null , int page = 0, int pageSize = 0)
     {
         try
         {
-            return Ok(_pedidoStatusService.GetList(ids, observacao, page, pageSize));
+            return Ok(_pedidoStatusService.GetList(ids, descricao, page, pageSize));
         }
         catch (Exception e)
         {

@@ -49,16 +49,19 @@ public class PedidoLogService(IPersonDataContext context) : IPedidoLogService
         return pedidoLog;
     }
 
-    public PagedList<PedidoLog> GetList (int[]? ids, int? idPedido, int? idStatus, int page = 0, int pageSize =0 )
+    public PagedList<PedidoLog> GetList (string? ids = null , int? idPedido = null, int? idStatus = null , int page = 0, int pageSize =0 )
     {
+        
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
+        
         var query =
             from pedidoLog in context.PedidoLog
             where
-                (ids == null || ids.Length == 0 || ids.Contains(pedidoLog.Id))
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(pedidoLog.Id))
                 && (idPedido == null || idPedido == pedidoLog.IdPedido)
                 &&(idStatus == null || idStatus == pedidoLog.IdStatus)
             select pedidoLog;
-
         return PagedList<PedidoLog>.Create(query, page, pageSize);
     }
     

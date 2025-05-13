@@ -81,13 +81,14 @@ public class EnderecoService(IPersonDataContext context) : IEnderecoService
             where
                 (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(endereco.Id))
                 && (getEnderecoRequest.Bairro == null || getEnderecoRequest.Bairro == endereco.Bairro)
-                && (getEnderecoRequest.idCliente == null || getEnderecoRequest.idCliente == endereco.IdCliente)
+                && (getEnderecoRequest.IdCliente == null|| getEnderecoRequest.IdCliente == endereco.IdCliente)
                 && (getEnderecoRequest.Cidade == null || getEnderecoRequest.Cidade == endereco.Cidade)
                 && (getEnderecoRequest.Cep == null || getEnderecoRequest.Cep == endereco.CEP)
-                && (getEnderecoRequest.idEstado == null || getEnderecoRequest.idEstado == endereco.IdEstado)
-                && (getEnderecoRequest.idPais == null || getEnderecoRequest.idPais == endereco.IdPais)
-                && (getEnderecoRequest.EnderecoPrincipal || getEnderecoRequest.EnderecoPrincipal == endereco.EnderecoPrincipal)
+                && (getEnderecoRequest.IdEstado == null || getEnderecoRequest.IdEstado == endereco.IdEstado)
+                && (getEnderecoRequest.IdPais == null || getEnderecoRequest.IdPais == endereco.IdPais)
+                && (getEnderecoRequest.EnderecoPrincipal == null || getEnderecoRequest.EnderecoPrincipal == endereco.EnderecoPrincipal)
             select endereco;
+        
         return PagedList<Endereco>.Create(query);
     }
     

@@ -73,8 +73,8 @@ public class OrdemCompraLogController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList([FromQuery]string? ids, int idOrdemDeCompra,
-        int idOrdemCompraStatus, int page = 0, int pageSize = 0)
+    public IActionResult GetList([FromQuery]string? ids = null , int? idOrdemDeCompra = null ,
+        int? idOrdemCompraStatus = null , int page = 0, int pageSize = 0)
     {
         try
         {

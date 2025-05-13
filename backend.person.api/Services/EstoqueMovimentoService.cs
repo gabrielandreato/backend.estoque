@@ -14,7 +14,7 @@ namespace backend.person.api.Services;
 public class EstoqueMovimentoService( IPersonDataContext context) : IEstoqueMovimentoService
 {
    
-    public PagedList<EstoqueMovimento> GetList (string? ids ,int? idProduto,int? idEstoqueEvento, 
+    public PagedList<EstoqueMovimento> GetList (string? ids = null  ,int? idProduto= null ,int? idEstoqueEvento = null , 
         int page = 0, int pageSize = 0)
     {
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);

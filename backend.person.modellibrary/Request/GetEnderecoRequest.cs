@@ -2,23 +2,19 @@ namespace backend.person.modellibrary.Request;
 
 public class GetEnderecoRequest
 {
-    public string? Ids  { get; set; }
+    public string? Ids { get; set; } = null;
 
-    public int? idCliente { get; set; }
+    public int? IdCliente { get; set; } = null;
 
-    public int? idPais { get; set; }
+    public int? IdPais { get; set; } = null;
 
-    public int? idEstado { get; set; }
+    public int? IdEstado { get; set; } = null;
 
-    public string? Cidade { get; set; }
+    public string? Cidade { get; set; } = null;
 
-    public string? Bairro { get; set; }
+    public string? Bairro { get; set; } = null;
 
-    public string? Cep { get; set; }
+    public string? Cep { get; set; } = null;
 
-    public bool EnderecoPrincipal { get; set; }
-     
-    
-    //int[]? ids = null, int? idCliente = null,
-   // int? idPais  = null,int? idEstado = null, string? Cidade = null, string? Bairro = null, string? Cep = null)
+    public bool? EnderecoPrincipal { get; set; } = null;
 }

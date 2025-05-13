@@ -40,7 +40,7 @@ public class MarcaService(IPersonDataContext context) : IMarcaService
     public Marca Update (int id, Marca marca)
     {
         var marcaAtualizada = GetByPk(id);
-        marcaAtualizada.Marcas = marca.Marcas;
+        marcaAtualizada.Descricao = marca.Descricao;
         context.SaveChanges();
         return marcaAtualizada;
     }
@@ -54,7 +54,7 @@ public class MarcaService(IPersonDataContext context) : IMarcaService
             from marca in context.Marca
             where
                 (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(marca.Id))
-                && (descricao == null || descricao == marca.Marcas)
+                && (descricao == null || descricao == marca.Descricao)
             select marca;
 
         return PagedList<Marca>.Create(query, page, pageSize);

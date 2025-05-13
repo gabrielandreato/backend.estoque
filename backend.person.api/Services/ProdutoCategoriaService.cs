@@ -10,9 +10,7 @@ namespace backend.person.api.Services;
 
 public class ProdutoCategoriaService(IPersonDataContext _context) : IProdutoCategoriaService
 {
-   
-    
-    public ProdutoCategoria Create (ProdutoCategoria produtoCategoria)
+    public ProdutoCategoria Create(ProdutoCategoria produtoCategoria)
     {
         _context.ProdutoCategoria.Add(produtoCategoria);
         _context.SaveChanges();
@@ -39,7 +37,7 @@ public class ProdutoCategoriaService(IPersonDataContext _context) : IProdutoCate
         return produtocategoria;
     }
 
-    public ProdutoCategoria Update (int id,ProdutoCategoria produtoCategoria)
+    public ProdutoCategoria Update(int id, ProdutoCategoria produtoCategoria)
     {
         var produtoCategoriaAtualizado = GetByPk(id);
         produtoCategoriaAtualizado.DescCategoria = produtoCategoria.DescCategoria;
@@ -47,22 +45,18 @@ public class ProdutoCategoriaService(IPersonDataContext _context) : IProdutoCate
         return produtoCategoriaAtualizado;
     }
 
-    public PagedList<ProdutoCategoria> GetList(int[]? ids = null, string? DescCategoria = null, 
+    public PagedList<ProdutoCategoria> GetList(string? ids = null, string? descCategoria = null,
         int page = 0, int pageSize = 0)
     {
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+
         var query =
             from produto in _context.ProdutoCategoria
             where
-                (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
-                && (DescCategoria == null || DescCategoria == produto.DescCategoria )
-                
-                
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(produto.Id))
+                && (descCategoria == null || descCategoria == produto.DescCategoria)
             select produto;
 
         return PagedList<ProdutoCategoria>.Create(query, page, pageSize);
     }
-       
-    
-    
-    
 }

@@ -72,7 +72,7 @@ public class OrdemCompraController : ControllerBase
     }
     
     [HttpGet]
-    public IActionResult GetList([FromQuery] string? ids ,int? idProduto ,int? idOrdemCompraStatus,  
+    public IActionResult GetList([FromQuery] string? ids = null  ,int? idProduto = null  ,int? idOrdemCompraStatus = null ,  
         int page = 0, int pageSize = 0)
     {
         try

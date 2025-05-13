@@ -52,7 +52,7 @@ public class EstoqueEventoService(IPersonDataContext context) : IEstoqueEventoSe
         return estoqueevento;
     }
 
-    public PagedList<EstoqueEvento> GetList(string? ids, string? descricao, int page =0, int pageSize = 0)
+    public PagedList<EstoqueEvento> GetList(string? ids = null , string? descricao = null , int page =0, int pageSize = 0)
     {
         
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);

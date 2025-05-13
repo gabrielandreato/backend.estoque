@@ -51,40 +51,51 @@ namespace backend.person.api.Services
             return produtoAtualizado;
         }
 
-        public PagedList<Produto> GetList(int[]? ids = null, string? descricao = null,
-            int page = 0, int pageSize = 0, int? idMarca = null)
+        public PagedList<Produto> GetList(string? ids = null, string? descricao = null,
+            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null, int? idMaterial = null, string? tamanho = null)
         {
+            var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+            
             var query =
                 from produto in context.Produto
                 where
-                    (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
+                    (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(produto.Id))
                     && (descricao == null || descricao == produto.Descricao)
                     && (idMarca == null || idMarca == produto.IdMarca)
+                    && (idCategoria == null || idCategoria == produto.IdCategoria)
+                    && (idMaterial == null || idMaterial == produto.IdMaterial)
+                    && (tamanho == null || tamanho == produto.Tamanho)
                 select produto;
 
             return PagedList<Produto>.Create(query, page, pageSize);
         }
-        public PagedList<VwProduto> GetVw(int[]? ids = null, string? descricao = null, 
-            int page = 0, int pageSize = 0, int? idMarca = null,int? idCategoria = null )
+        public PagedList<VwProduto> GetVw(string? ids = null, string? descricao = null, 
+            int page = 0, int pageSize = 0, int? idMarca = null,int? idCategoria = null, int? idMaterial= null, string? tamanho = null)
         {
+            
+            var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+            
             var query =
                 from produto in context.Produto
                 join marca in context.Marca on produto.IdMarca equals marca.Id
                 join produtoCategoria in context.ProdutoCategoria on produto.IdCategoria equals produtoCategoria.Id
                 where
-                    (ids == null || ids.Length == 0 || ids.Contains(produto.Id))
+                    (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(produto.Id))
                     && (descricao == null || descricao == produto.Descricao)
                     && (idMarca == null || idMarca == produto.IdMarca)
                     && (idCategoria == null || idCategoria == produto.IdCategoria)
+                    && (idMaterial == null || idMaterial == produto.IdMaterial)
+                    && (tamanho == null || tamanho == produto.Tamanho)
 
                 select new VwProduto()
                 {
                     Id = produto.Id,
                     Descricao = produto.Descricao,
                     IdMarca = produto.IdMarca,
-                    DescricaoMarca = marca.Marcas,
+                    DescricaoMarca = marca.Descricao,
                     IdCategoria = produto.IdCategoria,
                     DescricaoCategoria = produtoCategoria.DescCategoria,
+                    Tamanho = produto.Tamanho,
                 };
 
             return PagedList<VwProduto>.Create(query, page, pageSize);

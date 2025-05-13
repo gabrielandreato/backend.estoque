@@ -31,7 +31,7 @@ public class TelefoneService (IPersonDataContext context ):ITelefoneService
     public Telefone Update(int id, Telefone telefone)
     {
         var telefoneAtualizado = GetByPk(id);
-        telefoneAtualizado.telefone = telefone.telefone;
+        telefoneAtualizado.Numero = telefone.Numero;
         telefoneAtualizado.IdCliente = telefone.IdCliente;
         return telefoneAtualizado;
     }
@@ -44,16 +44,18 @@ public class TelefoneService (IPersonDataContext context ):ITelefoneService
         return telefoneAtualizado;
     }
     
-    public PagedList<Telefone> GetList(int[]? ids = null, string? Telefones = null,
-        int? IdCliente = null, int page = 0, int pageSize = 0)
+    public PagedList<Telefone> GetList(string? ids = null, string? numero = null,
+        int? idCliente = null, int page = 0, int pageSize = 0)
     {
+        var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
+        
         var query =
-            from Telefone in context.Telefone
+          from telefone in context.Telefone
             where
-                (ids == null || ids.Length == 0 || ids.Contains(Telefone.Id))
-                && (Telefone == null || Telefones == Telefone.telefone)
-                &&(IdCliente == null || IdCliente == IdCliente.Value)
-            select Telefone;
+                (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(telefone.Id))
+              &&(numero == null || numero == telefone.Numero)
+                &&(idCliente == null|| idCliente == telefone.IdCliente)
+            select telefone;
 
         return PagedList<Telefone>.Create(query, page, pageSize);
     }
