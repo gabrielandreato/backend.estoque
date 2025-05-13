@@ -47,7 +47,7 @@ public class OrdemCompraLogService(IPersonDataContext context): IOrdemCompraLogS
         context.SaveChanges();
         return ordemCompraLog;
     }
-    public PagedList<OrdemCompraLog> GetList (string? ids,int? idOrdemCompra = null, int? idOrdemCompraStatus = null, 
+    public PagedList<OrdemCompraLog> GetList (string? ids = null ,int? idOrdemCompra = null, int? idOrdemCompraStatus = null, 
         int page = 0, int pageSize = 0)
     {
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
@@ -56,8 +56,8 @@ public class OrdemCompraLogService(IPersonDataContext context): IOrdemCompraLogS
             from ordemCompraLog in context.OrdemCompraLog
             where
                 (splittedIds == null || splittedIds.Length == 0 || splittedIds.Contains(ordemCompraLog.Id))
-                &&(idOrdemCompra == 0 || idOrdemCompra == ordemCompraLog.IdOrdemCompra)
-                &&(idOrdemCompraStatus == 0 || idOrdemCompraStatus == ordemCompraLog.IdOrdemCompraStatus)
+                &&(idOrdemCompra == null || idOrdemCompra == ordemCompraLog.IdOrdemCompra)
+                &&(idOrdemCompraStatus == null || idOrdemCompraStatus == ordemCompraLog.IdOrdemCompraStatus)
             select ordemCompraLog;
 
         return PagedList<OrdemCompraLog>.Create(query, page, pageSize);

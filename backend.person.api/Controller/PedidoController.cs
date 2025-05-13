@@ -70,8 +70,8 @@ public class PedidoController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetList(string? ids,
-        string? observacao, int? idPedidoStatus, int? idCliente,decimal? precoBruto, string? formaDePagamento,decimal? desconto,decimal? taxas, int page = 0, int pageSize = 0)
+    public IActionResult GetList(string? ids = null ,
+        string? observacao = null , int? idPedidoStatus = null , int? idCliente= null ,decimal? precoBruto = null , string? formaDePagamento = null ,decimal? desconto = null ,decimal? taxas = null , int page = 0, int pageSize = 0)
     {
         try
         {

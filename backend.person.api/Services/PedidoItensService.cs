@@ -41,8 +41,8 @@ public class PedidoItensService(IPersonDataContext context) : IPedidoItensServic
         return pedidoItensAtualizado;
     }
 
-    public PagedList<PedidoItens> GetList (string? ids, int? idPedido, int? idProduto, 
-        int? quantidade, int page = 0  ,int pageSize = 0)
+    public PagedList<PedidoItens> GetList (string? ids = null , int? idPedido = null , int? idProduto = null , 
+        int? quantidade = null , int page = 0  ,int pageSize = 0)
     {
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
         

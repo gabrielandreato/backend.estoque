@@ -49,7 +49,7 @@ public class PedidoLogService(IPersonDataContext context) : IPedidoLogService
         return pedidoLog;
     }
 
-    public PagedList<PedidoLog> GetList (string? ids, int? idPedido, int? idStatus, int page = 0, int pageSize =0 )
+    public PagedList<PedidoLog> GetList (string? ids = null , int? idPedido = null, int? idStatus = null , int page = 0, int pageSize =0 )
     {
         
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);

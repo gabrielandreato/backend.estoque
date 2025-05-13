@@ -52,7 +52,7 @@ namespace backend.person.api.Services
         }
 
         public PagedList<Produto> GetList(string? ids = null, string? descricao = null,
-            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null, int? idMaterial = null)
+            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null, int? idMaterial = null, string? tamanho = null)
         {
             var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
             
@@ -64,12 +64,13 @@ namespace backend.person.api.Services
                     && (idMarca == null || idMarca == produto.IdMarca)
                     && (idCategoria == null || idCategoria == produto.IdCategoria)
                     && (idMaterial == null || idMaterial == produto.IdMaterial)
+                    && (tamanho == null || tamanho == produto.Tamanho)
                 select produto;
 
             return PagedList<Produto>.Create(query, page, pageSize);
         }
         public PagedList<VwProduto> GetVw(string? ids = null, string? descricao = null, 
-            int page = 0, int pageSize = 0, int? idMarca = null,int? idCategoria = null, int? idMaterial= null)
+            int page = 0, int pageSize = 0, int? idMarca = null,int? idCategoria = null, int? idMaterial= null, string? tamanho = null)
         {
             
             var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);
@@ -84,6 +85,7 @@ namespace backend.person.api.Services
                     && (idMarca == null || idMarca == produto.IdMarca)
                     && (idCategoria == null || idCategoria == produto.IdCategoria)
                     && (idMaterial == null || idMaterial == produto.IdMaterial)
+                    && (tamanho == null || tamanho == produto.Tamanho)
 
                 select new VwProduto()
                 {
@@ -93,6 +95,7 @@ namespace backend.person.api.Services
                     DescricaoMarca = marca.Descricao,
                     IdCategoria = produto.IdCategoria,
                     DescricaoCategoria = produtoCategoria.DescCategoria,
+                    Tamanho = produto.Tamanho,
                 };
 
             return PagedList<VwProduto>.Create(query, page, pageSize);

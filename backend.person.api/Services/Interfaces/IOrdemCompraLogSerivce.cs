@@ -10,6 +10,6 @@ public interface IOrdemCompraLogSerivce
     OrdemCompraLog GetByPk(int id);
     OrdemCompraLog Update(int id, OrdemCompraLog ordemCompraLog);
     OrdemCompraLog Remove(int id);
-    PagedList<OrdemCompraLog> GetList (string? ids,int? idOrdemCompra, int? idOrdemCompraStatus, 
+    PagedList<OrdemCompraLog> GetList (string? ids = null ,int? idOrdemCompra = null , int? idOrdemCompraStatus = null , 
         int page = 0, int pageSize = 0);
 }

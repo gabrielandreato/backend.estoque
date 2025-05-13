@@ -49,7 +49,7 @@ public class OrdemCompraService(IPersonDataContext context, IEstoqueMovimentoSer
         return ordemCompra;
     }
     
-    public PagedList<OrdemCompra> GetList(string? ids, int? idProduto = null, int? idOrdemCompraStatus = null , 
+    public PagedList<OrdemCompra> GetList(string? ids = null , int? idProduto = null, int? idOrdemCompraStatus = null , 
         int page = 0, int pageSize = 0)
     {
         

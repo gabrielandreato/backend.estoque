@@ -45,7 +45,7 @@ public class MaterialService(IPersonDataContext context):IMaterialService
     }
     
     
-    public PagedList<Material> GetList (string? ids,string? descricao, int page = 0, int pageSize = 0)
+    public PagedList<Material> GetList (string? ids  = null ,string? descricao = null , int page = 0, int pageSize = 0)
     {
        
         var splittedIds = Array.ConvertAll(ids?.Split(",") ?? Array.Empty<string>(), int.Parse);

@@ -70,8 +70,8 @@ public class MaterialController:ControllerBase
     }
         
     [HttpGet]
-    public IActionResult GetList(string? ids,
-        string? descricao, int page = 0, int pageSize = 0)
+    public IActionResult GetList(string? ids = null ,
+        string? descricao = null , int page = 0, int pageSize = 0)
     {
         try
         {

@@ -45,7 +45,7 @@ public class PedidoStatusService(IPersonDataContext context) : IPedidoStatusServ
       return pedidoStatus;
    }
     
-   public PagedList<PedidoStatus> GetList(string? ids, string? descricao,
+   public PagedList<PedidoStatus> GetList(string? ids = null , string? descricao= null ,
       int page = 0, int pageSize = 0)
    {
       

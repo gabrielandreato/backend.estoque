@@ -15,9 +15,9 @@ namespace backend.person.api.Services.Interfaces
         
         Produto Update (int id, Produto produto);
         PagedList<Produto> GetList(string? ids = null, string? descricao = null,
-            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null, int? idMaterial = null);
+            int page = 0, int pageSize = 0, int? idMarca = null, int? idCategoria = null, int? idMaterial = null, string? tamanho = null);
         
         PagedList<VwProduto> GetVw (string? ids, string? descricao,
-            int page, int pageSize, int? idMarca, int? idCategoria, int? idMaterial);
+            int page, int pageSize, int? idMarca, int? idCategoria, int? idMaterial, string? tamanho = null);
     }
 }

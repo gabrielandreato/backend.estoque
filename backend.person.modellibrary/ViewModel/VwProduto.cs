@@ -16,5 +16,7 @@ public class VwProduto
 
     public string DescricaoCategoria { get; set; }
 
+    public string Tamanho { get; set; }
+
     
 }
